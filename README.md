@@ -14,7 +14,9 @@
 - React Native
 - Xcode
 - COLOURlovers API
+- `react-native-camera`
 - `vibrant.js/node-vibrant`
+- Firebase
 
 ## Installation instructions for dependencies
 
