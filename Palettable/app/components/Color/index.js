@@ -3,7 +3,6 @@ import { AppRegistry, Text, View, StyleSheet } from 'react-native';
 
 import Color from '../Color';
 import hexToRgb from 'hex-to-rgb';
-// import QuicksandRegular from '../assets/fonts/Quicksand/Quicksand-Regular.ttf';
 
 export default class Discover extends Component {
   constructor(props) {
@@ -61,7 +60,7 @@ const styles = StyleSheet.create({
   },
   hexValueLight: {
     fontSize: 20,
-    // fontFamily: QuicksandRegular,
+    fontFamily: 'Quicksand',
     fontWeight: 'bold',
     textAlign: 'right',
     opacity: 0.85,
@@ -69,7 +68,7 @@ const styles = StyleSheet.create({
   },
   hexValueDark: {
     fontSize: 20,
-    // fontFamily: QuicksandRegular,
+    fontFamily: 'Quicksand',
     fontWeight: 'bold',
     textAlign: 'right',
     opacity: 0.85,

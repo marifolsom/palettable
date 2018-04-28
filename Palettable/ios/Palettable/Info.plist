@@ -39,21 +39,28 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
-	   <key>NSAllowsArbitraryLoads</key>
-	   <true/>
-	   <key>NSExceptionDomains</key>
-	   <dict>
-	     <key>www.colourlovers.com</key>
-	     <dict>
-	        <key>NSExceptionAllowsInsecureHTTPLoads</key>
-	        <true/>
-	        <key>NSIncludesSubdomains</key>
-	        <true/>
-	     </dict>
-	   </dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>www.colourlovers.com</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Quicksand-Bold.ttf</string>
+		<string>Quicksand-Light.ttf</string>
+		<string>Quicksand-Medium.ttf</string>
+		<string>Quicksand-Regular.ttf</string>
+	</array>
 </dict>
 </plist>
