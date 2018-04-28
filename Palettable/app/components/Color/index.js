@@ -22,16 +22,10 @@ export default class Discover extends Component {
   // https://github.com/scottcorgan/contrast
   lightOrDark(hexValue) {
     var rgb = hexToRgb(this.state.hexValue);
-    var contrast = Math.round(((Number(rgb[0]) * 299) + (Number(rgb[1]) * 587) + (Number(rgb[2]) * 114)) /1000)
-    if (contrast <= 180) {
-      this.setState({
-        lightOrDark: 'dark'
-      })
-    } else {
-      this.setState({
-        lightOrDark: 'light'
-      })
-    }
+    var contrast = Math.round(((Number(rgb[0]) * 299) + (Number(rgb[1]) * 587) + (Number(rgb[2]) * 114)) / 1000);
+    contrast <= 180 ?
+      this.setState({ lightOrDark: 'dark' }) :
+      this.setState({ lightOrDark: 'light' });
   }
 
   render() {
@@ -56,21 +50,21 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     height: 125,
     padding: 50,
-    paddingRight: 25
+    paddingLeft: 30
   },
   hexValueLight: {
     fontSize: 20,
-    fontFamily: 'Quicksand',
+    // fontFamily: 'Quicksand',
     fontWeight: 'bold',
-    textAlign: 'right',
+    textAlign: 'left',
     opacity: 0.85,
     color: '#000000'
   },
   hexValueDark: {
     fontSize: 20,
-    fontFamily: 'Quicksand',
+    // fontFamily: 'Quicksand',
     fontWeight: 'bold',
-    textAlign: 'right',
+    textAlign: 'left',
     opacity: 0.85,
     color: '#ffffff'
   }
