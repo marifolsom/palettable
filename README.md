@@ -15,7 +15,8 @@
 - Xcode
 - COLOURlovers API
 - `react-native-camera`
-- `vibrant.js/node-vibrant`
+- `vibrant.js/node-vibrant`, `color-thief`, `react-native-palette`
+- `rgb-hex`
 - Firebase
 
 ## Installation instructions for dependencies
