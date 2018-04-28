@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, View, StyleSheet } from 'react-native';
 
-import Color from '../Color';
 import hexToRgb from 'hex-to-rgb';
+import { Fonts } from './src/utils/Fonts';
 
 export default class Discover extends Component {
   constructor(props) {
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   },
   hexValueLight: {
     fontSize: 20,
-    // fontFamily: 'Quicksand',
+    fontFamily: Fonts.Quicksand,
     fontWeight: 'bold',
     textAlign: 'left',
     opacity: 0.85,
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   hexValueDark: {
     fontSize: 20,
-    // fontFamily: 'Quicksand',
+    fontFamily: Fonts.Quicksand,
     fontWeight: 'bold',
     textAlign: 'left',
     opacity: 0.85,
