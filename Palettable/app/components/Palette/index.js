@@ -30,9 +30,8 @@ export default class Palette extends Component {
   }
 
   render() {
-    console.log(this.state.palette);
     const colors = this.state.palette.map(color => {
-      return <Color key={color} hex={color} />
+      return <Color key={color} hexValue={color} />
     })
 
     return (
