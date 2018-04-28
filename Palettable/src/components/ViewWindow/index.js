@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View } from 'react-native';
+import { StyleSheet, StatusBar, Platform, Text, View } from 'react-native';
 
 import MainMenu from '../MainMenu';
 import Discover from '../Discover';
@@ -12,10 +12,22 @@ import Register from '../Register';
 export default class ViewWindow extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.view}>
+        <StatusBar barStyle="dark-content" hidden = {false} />
         {/* <MainMenu /> */}
         <Discover />
+        <NavBar />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  view: {
+    position: 'relative',
+    top: 20
+  }
+  // statusBar: {
+  //   height: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
+  // }
+})

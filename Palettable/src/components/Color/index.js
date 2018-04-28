@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, StyleSheet } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import hexToRgb from 'hex-to-rgb';
-import { Fonts } from './src/utils/Fonts';
+import { Fonts } from '../../utils/Fonts';
 
 export default class Discover extends Component {
   constructor(props) {
@@ -19,13 +19,11 @@ export default class Discover extends Component {
   }
 
   // Make a function that determines whether a hex value is light or dark
-  // https://github.com/scottcorgan/contrast
-  lightOrDark(hexValue) {
+  // https://github.com/scottcorgan/contrast/blob/master/index.js
+  lightOrDark() {
     var rgb = hexToRgb(this.state.hexValue);
     var contrast = Math.round(((Number(rgb[0]) * 299) + (Number(rgb[1]) * 587) + (Number(rgb[2]) * 114)) / 1000);
-    contrast <= 180 ?
-      this.setState({ lightOrDark: 'dark' }) :
-      this.setState({ lightOrDark: 'light' });
+    contrast <= 180 ? this.setState({ lightOrDark: 'dark' }) : this.setState({ lightOrDark: 'light' });
   }
 
   render() {
@@ -35,9 +33,11 @@ export default class Discover extends Component {
       { backgroundColor: `#${this.state.hexValue}` }
     ])
 
+    console.log(this.state.lightOrDark);
+
     return (
       <View style={colorBackground}>
-        <Text style={this.state.lightOrDark === 'dark' ? styles.hexValueDark : styles.hexValueLight}>
+        <Text style={[styles.hexValue, this.state.lightOrDark === 'dark' ? styles.hexValueDark : styles.hexValueLight]}>
           #{this.state.hexValue}
         </Text>
       </View>
@@ -47,25 +47,22 @@ export default class Discover extends Component {
 
 const styles = StyleSheet.create({
   swatch: {
-    backgroundColor: 'white',
-    height: 125,
-    padding: 50,
-    paddingLeft: 30
+    height: 118,
+    paddingLeft: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center'
   },
-  hexValueLight: {
-    fontSize: 20,
-    fontFamily: Fonts.Quicksand,
-    fontWeight: 'bold',
+  hexValue: {
+    fontSize: 25,
+    fontFamily: Fonts.QuicksandMedium,
     textAlign: 'left',
     opacity: 0.85,
+  },
+  hexValueLight: {
     color: '#000000'
   },
   hexValueDark: {
-    fontSize: 20,
-    fontFamily: Fonts.Quicksand,
-    fontWeight: 'bold',
-    textAlign: 'left',
-    opacity: 0.85,
     color: '#ffffff'
   }
 })

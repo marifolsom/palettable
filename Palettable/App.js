@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, Text, View } from 'react-native';
 
-import ViewWindow from './app/components/ViewWindow'
+import ViewWindow from './src/components/ViewWindow';
 
 export default class App extends Component {
   render() {
