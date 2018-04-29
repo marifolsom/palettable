@@ -26,7 +26,12 @@ Palettable is a mobile app that allows users to discover different color palette
 - As a , I want .
 
 ## Wireframes
-<img src="" width="425">
+<img src="./assets/wireframes/main-menu.png" height="425">
+<img src="./assets/wireframes/login-register.png" height="425">
+<img src="./assets/wireframes/palette.png" height="425">
+<img src="./assets/wireframes/favorites.png" height="425">
+<img src="./assets/wireframes/capture.png" height="425">
+<img src="./assets/wireframes/palette2.png" height="425">
 
 ## Technologies
 - React Native - a framework for building native mobile apps
@@ -36,6 +41,7 @@ Palettable is a mobile app that allows users to discover different color palette
 - COLOURlovers API - color palette API
 - `hex-rgb`/`rgb-hex` - convert hex to rgb or rgb to hex
 - Firebase Authentication - provides backend services, easy-to-use SDKs, and ready-made UI libraries to authenticate users
+- `react-navigation` or `react-native-navigation` - nav bar
 
 ## Timeline
 
