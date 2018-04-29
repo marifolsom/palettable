@@ -5,6 +5,10 @@
 ### General Approach
 
 ## Explanations of the technologies used
+- React Native — a framework for building native mobile apps
+- Xcode — a software development environment that allows you to simulate your app on an iPhone
+- COLOURlovers API — color palette API, used to randomly generate a color palette on the discover page
+- `hex-rgb`/`rgb-hex` — npm package that converts hex to rgb or rgb to hex
 
 ## Installation instructions for dependencies
 
