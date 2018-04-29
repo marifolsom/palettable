@@ -15,13 +15,13 @@ export default class Discover extends Component {
   }
 
   componentDidMount(){
-    this.lightOrDark();
+    this.lightOrDark(this.state.hexValue);
   }
 
   // Make a function that determines whether a hex value is light or dark
   // https://github.com/scottcorgan/contrast/blob/master/index.js
-  lightOrDark() {
-    var rgb = hexToRgb(this.state.hexValue);
+  lightOrDark(hexValue) {
+    var rgb = hexToRgb(hexValue);
     var contrast = Math.round(((Number(rgb[0]) * 299) + (Number(rgb[1]) * 587) + (Number(rgb[2]) * 114)) / 1000);
     contrast <= 180 ? this.setState({ lightOrDark: 'dark' }) : this.setState({ lightOrDark: 'light' });
   }
