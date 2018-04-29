@@ -26,7 +26,7 @@ Palettable is a mobile app that allows users to discover different color palette
 - As a , I want .
 
 ## Wireframes
-<img src="Palettable/assets/wireframes/main-menu.png" height="425"> <img src="Palettable/assets/wireframes/login-register.png" height="425"> <img src="Palettable/assets/wireframes/palette.png" height="425"> <img src="Palettable/assets/wireframes/favorites.png" height="425"> <img src="Palettable/assets/wireframes/capture.png" height="425"> <img src="Palettable/assets/wireframes/palette2.png" height="425">
+<img src="Palettable/assets/wireframes/main-menu.png" height="450"> <img src="Palettable/assets/wireframes/login-register.png" height="450"> <img src="Palettable/assets/wireframes/palette.png" height="450"> <img src="Palettable/assets/wireframes/favorites.png" height="450"> <img src="Palettable/assets/wireframes/capture.png" height="450"> <img src="Palettable/assets/wireframes/palette2.png" height="450">
 
 ## Technologies
 - React Native - a framework for building native mobile apps
