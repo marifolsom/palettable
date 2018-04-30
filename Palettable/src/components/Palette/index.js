@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
 import Color from '../Color';
+import rgbToHex from 'rgb-hex';
 
 class Palette extends Component {
   constructor(props) {
@@ -12,28 +13,36 @@ class Palette extends Component {
   }
 
   componentDidMount() {
-    this.fetchRandomPalette()
+    this.fetchRandomPalette();
   }
 
-  // Make an API fetch to get the hex values of a random palette and update the palette state with that info
+  // Make an API fetch to get the rgb values of a random palette and update the palette state with that info
   fetchRandomPalette() {
-    fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
-      .then(apiResponse => apiResponse.json())
-      .then(paletteInfo => {
-        console.log(paletteInfo[0].colors);
-        this.setState({
-          palette: paletteInfo[0].colors
+    const url = 'http://colormind.io/api/';
+    const data = { model: 'default' };
+    const http = new XMLHttpRequest();
+    const self = this;
+
+    http.onreadystatechange = function() {
+      if(http.readyState == 4 && http.status == 200) {
+        const palette = JSON.parse(http.responseText).result;
+        console.log(palette);
+        self.setState({
+          palette: palette
         })
-      })
-      .catch(error => {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
-      })
+      }
+    }
+
+    http.open('POST', url, true);
+    http.send(JSON.stringify(data));
   }
 
   render() {
-    // Loop over each color in the palette and create a color component with its hex value passed as a prop
+    // Loop over array of rgb values, convert to hex, and create a color component with its hex value passed as a prop
     const colors = this.state.palette.map(color => {
-      return <Color key={color} hexValue={color} />
+      const hexValue = rgbToHex(Number(color[0]), Number(color[1]), Number(color[3]));
+      console.log(hexValue);
+      return <Color key={hexValue} hexValue={hexValue} />
     })
 
     return (

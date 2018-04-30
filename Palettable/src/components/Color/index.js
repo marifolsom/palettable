@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import hexToRgb from 'hex-to-rgb';
 import { Fonts } from '../../utils/Fonts';
 
-class Discover extends Component {
+class Color extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -38,7 +38,7 @@ class Discover extends Component {
     return (
       <View style={colorBackground}>
         <Text style={[styles.hexValue, this.state.lightOrDark === 'dark' ? styles.hexValueDark : styles.hexValueLight]}>
-          #{this.state.hexValue}
+          #{this.state.hexValue.toUpperCase()}
         </Text>
       </View>
     )
@@ -47,7 +47,7 @@ class Discover extends Component {
 
 const styles = StyleSheet.create({
   swatch: {
-    height: 118,
+    height: 111,
     paddingLeft: 30,
     display: 'flex',
     flexDirection: 'row',
