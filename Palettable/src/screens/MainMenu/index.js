@@ -3,21 +3,19 @@ import { Text, View, Button } from 'react-native';
 
 import startMainTabs from '../MainTabs/startMainTabs';
 
-export default class MainMenuScreen extends Component {
-  discoverHandler() {
-    startMainTabs();
-  }
-
-  generateHandler() {
+class MainMenuScreen extends Component {
+  navHandler() {
     startMainTabs();
   }
 
   render() {
     return (
       <View>
-        <Button title="Discover" onPress={this.discoverHandler} />
-        <Button title="Generate" onPress={this.generateHandler} />
+        <Button title="Discover" onPress={this.navHandler} />
+        <Button title="Generate" onPress={this.navHandler} />
       </View>
     )
   }
 }
+
+export default MainMenuScreen;
