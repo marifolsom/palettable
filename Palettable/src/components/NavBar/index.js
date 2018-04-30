@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { Fonts } from '../../utils/Fonts';
 
-export default class NavBar extends Component {
+class NavBar extends Component {
   render() {
     return (
       <View style={styles.navBar}>
@@ -28,3 +28,5 @@ const styles = StyleSheet.create({
     color: '#000000'
   }
 })
+
+export default NavBar;

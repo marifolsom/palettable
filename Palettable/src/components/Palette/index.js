@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import Color from '../Color';
 
-export default class Palette extends Component {
+class Palette extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -43,3 +43,5 @@ export default class Palette extends Component {
     )
   }
 }
+
+export default Palette;

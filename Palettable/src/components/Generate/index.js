@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import Camera from '../Camera';
 import CameraRoll from '../CameraRoll';
 
-export default class Generate extends Component {
+class Generate extends Component {
   render() {
     return (
       <View>
@@ -13,3 +13,5 @@ export default class Generate extends Component {
     )
   }
 }
+
+export default Generate;

@@ -18,6 +18,6 @@ Navigation.registerComponent('palettable.GenerateScreen', () => GenerateScreen);
 Navigation.startSingleScreenApp({
   screen: {
     screen: 'palettable.MainMenuScreen',
-    title: 'Main Menu'
+    title: 'Palettable'
   }
 })

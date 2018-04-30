@@ -9,7 +9,7 @@ import NavBar from '../NavBar';
 import Login from '../Login';
 import Register from '../Register';
 
-export default class ViewWindow extends Component {
+class ViewWindow extends Component {
   render() {
     return (
       <View style={styles.view}>
@@ -31,3 +31,5 @@ const styles = StyleSheet.create({
   //   height: Platform.OS === 'ios' ? 20 : StatusBar.currentHeight
   // }
 })
+
+export default ViewWindow;

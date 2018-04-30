@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-export default class GenerateScreen extends Component {
+class GenerateScreen extends Component {
   render() {
     return (
       <View>
@@ -10,3 +10,5 @@ export default class GenerateScreen extends Component {
     )
   }
 }
+
+export default GenerateScreen;

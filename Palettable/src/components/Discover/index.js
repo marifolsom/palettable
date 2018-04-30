@@ -3,7 +3,7 @@ import { Text, View } from 'react-native';
 
 import Palette from '../Palette';
 
-export default class Discover extends Component {
+class Discover extends Component {
   render() {
     return (
       <View>
@@ -12,3 +12,5 @@ export default class Discover extends Component {
     )
   }
 }
+
+export default Discover;

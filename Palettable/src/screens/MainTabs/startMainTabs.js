@@ -1,6 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 
-const startTabs = () => {
+export function startTabs() {
   Navigation.startTabBasedApp({
     tabs: [
       {

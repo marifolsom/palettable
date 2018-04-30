@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import hexToRgb from 'hex-to-rgb';
 import { Fonts } from '../../utils/Fonts';
 
-export default class Discover extends Component {
+class Discover extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -66,3 +66,5 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   }
 })
+
+export default Color;

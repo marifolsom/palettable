@@ -4,7 +4,7 @@ import { Text, View } from 'react-native';
 import Palette from '../Palette';
 import Color from '../Color';
 
-export default class Favorites extends Component {
+class Favorites extends Component {
   render() {
     return (
       <View>
@@ -13,3 +13,5 @@ export default class Favorites extends Component {
     )
   }
 }
+
+export default Favorites;
