@@ -21,8 +21,8 @@ class Color extends Component {
   // Make a function that determines whether a hex value is light or dark
   // https://github.com/scottcorgan/contrast/blob/master/index.js
   lightOrDark(hexValue) {
-    var rgb = hexToRgb(hexValue);
-    var contrast = Math.round(((Number(rgb[0]) * 299) + (Number(rgb[1]) * 587) + (Number(rgb[2]) * 114)) / 1000);
+    const rgb = hexToRgb(hexValue);
+    const contrast = Math.round(((Number(rgb[0]) * 299) + (Number(rgb[1]) * 587) + (Number(rgb[2]) * 114)) / 1000);
     contrast <= 180 ? this.setState({ lightOrDark: 'dark' }) : this.setState({ lightOrDark: 'light' });
   }
 
@@ -47,7 +47,7 @@ class Color extends Component {
 
 const styles = StyleSheet.create({
   swatch: {
-    height: 111,
+    height: 110.5,
     paddingLeft: 30,
     display: 'flex',
     flexDirection: 'row',

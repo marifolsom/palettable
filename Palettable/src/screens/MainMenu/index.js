@@ -22,6 +22,11 @@ class MainMenuScreen extends Component {
         title: 'Generate'
       },
       {
+        screen: 'palettable.FavoritesScreen',
+        label: 'Favorites',
+        title: 'Favorites'
+      },
+      {
         screen: 'palettable.AuthScreen',
         label: 'Login',
         title: 'Login'
@@ -32,6 +37,7 @@ class MainMenuScreen extends Component {
       <View>
         <Button title="Discover" onPress={() => this.navHandler(tabsArray)} />
         <Button title="Generate" onPress={() => this.navHandler(tabsArray)} />
+        <Button title="Favorites" onPress={() => this.navHandler(tabsArray)} />
         <Button title="Login" onPress={() => this.navHandler(tabsArray)} />
       </View>
     )

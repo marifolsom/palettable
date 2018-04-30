@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 
-import Palette from '../Palette';
-import Color from '../Color';
-
-class Favorites extends Component {
+class FavoritesScreen extends Component {
   render() {
     return (
       <View>
@@ -14,4 +11,4 @@ class Favorites extends Component {
   }
 }
 
-export default Favorites;
+export default FavoritesScreen;
