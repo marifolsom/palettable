@@ -1,22 +1,17 @@
 import React, { Component } from 'react';
 import { StyleSheet, StatusBar, Platform, Text, View } from 'react-native';
 
-import MainMenu from '../MainMenu';
 import Discover from '../Discover';
 import Generate from '../Generate';
 import Favorites from '../Favorites';
-import NavBar from '../NavBar';
-import Login from '../Login';
-import Register from '../Register';
+import Auth from '../Auth';
 
 class ViewWindow extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <StatusBar barStyle="dark-content" hidden = {false} />
-        {/* <MainMenu /> */}
+        <StatusBar barStyle="dark-content" hidden={false} />
         <Discover />
-        <NavBar />
       </View>
     )
   }
