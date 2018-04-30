@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
-import { AppRegistry, Text, View } from 'react-native';
+import { Navigation } from 'react-native-navigation';
+// import { registerScreens } from './src/screens';
+// registerScreens()
 
-import ViewWindow from './src/components/ViewWindow';
+import AuthScreen from './src/screens/Auth';
+import MainMenuScreen from './src/screens/MainMenu';
+import DiscoverScreen from './src/screens/Discover';
+import GenerateScreen from './src/screens/Generate';
 
-export default class App extends Component {
-  render() {
-    return (
-      <View>
-        <ViewWindow />
-      </View>
-    )
+// Register all of the app's screens
+// These registered screens can be accessed anywhere in the app
+Navigation.registerComponent('palettable.AuthScreen', () => AuthScreen);
+Navigation.registerComponent('palettable.MainMenuScreen', () => MainMenuScreen);
+Navigation.registerComponent('palettable.DiscoverScreen', () => DiscoverScreen);
+Navigation.registerComponent('palettable.GenerateScreen', () => GenerateScreen);
+
+// Start the app
+Navigation.startSingleScreenApp({
+  screen: {
+    screen: 'palettable.MainMenuScreen',
+    title: 'Main Menu'
   }
-}
-
-AppRegistry.registerComponent('App', () => App);
+})
