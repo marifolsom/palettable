@@ -15,6 +15,7 @@ export default class Palette extends Component {
     this.fetchRandomPalette()
   }
 
+  // Make an API fetch to get the hex values of a random palette and update the palette state with that info
   fetchRandomPalette() {
     fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
       .then(apiResponse => apiResponse.json())
@@ -30,6 +31,7 @@ export default class Palette extends Component {
   }
 
   render() {
+    // Loop over each color in the palette and create a color component with its hex value passed as a prop
     const colors = this.state.palette.map(color => {
       return <Color key={color} hexValue={color} />
     })
