@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -69,14 +69,16 @@ class GenerateScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.imagePickerHandler}>
+        {this.state.imageSource === null ? (
+          <TouchableOpacity onPress={this.imagePickerHandler} style={styles.imageContainer}>
+            <Text>Upload or take a photo!</Text>
+          </TouchableOpacity>
+        ) : (
           <View style={styles.imageContainer}>
-            {this.state.imageSource === null ?
-              <Text>Upload or take a photo!</Text> :
-              <Image source={this.state.imageSource} style={styles.imageContainer} />
-            }
+            <Image source={this.state.imageSource} style={styles.imageContainer} />
+            <Button title="Take a different photo" onPress={this.imagePickerHandler} />
           </View>
-        </TouchableOpacity>
+        )}
       </View>
     )
   }

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { Text, View, TouchableHighlight } from 'react-native';
 
 import Color from '../Color';
 import rgbToHex from 'rgb-hex';
