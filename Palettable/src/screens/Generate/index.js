@@ -67,7 +67,7 @@ class GenerateScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TouchableOpacity onPress={this.imagePickerHandler}>
           <View style={styles.imageContainer}>
             {this.state.imageSource === null ?
@@ -82,11 +82,15 @@ class GenerateScreen extends Component {
 }
 
 const styles = StyleSheet.create({
-  imageContainer: {
-    height: 300,
+  container: {
+    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#9B9B9B'
+    alignItems: 'center'
+  },
+  imageContainer: {
+    height: 500,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 })
 

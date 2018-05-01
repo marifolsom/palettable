@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
 
 import Color from '../Color';
 import rgbToHex from 'rgb-hex';
@@ -10,6 +10,7 @@ class Palette extends Component {
     this.state = {
       palette: []
     }
+    this.fetchRandomPalette = this.fetchRandomPalette.bind(this);
   }
 
   componentDidMount() {
@@ -46,8 +47,12 @@ class Palette extends Component {
     })
 
     return (
-      <View>
-        {colors}
+      <View onPress={this.fetchRandomPalette}>
+        <TouchableHighlight onPress={this.fetchRandomPalette}>
+          <View>
+            {colors}
+          </View>
+        </TouchableHighlight>
       </View>
     )
   }
