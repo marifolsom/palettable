@@ -56,11 +56,12 @@ class GenerateScreen extends Component {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        // Image source needs an object with a uri property
+        // Image source needs an object with a URI property
         let source = { uri: response.uri };
         this.setState({
           imageSource: source
         })
+        console.log(this.state.imageSource, typeof this.state.imageSource);
       }
     })
   }
@@ -89,6 +90,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     height: 500,
+    width: 375,
     justifyContent: 'center',
     alignItems: 'center'
   }
