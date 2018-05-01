@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button } from 'react-native';
+import { Text, View, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
 
@@ -7,19 +7,50 @@ class GenerateScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedImage: null
+      // Store the selected image's URI path
+      imageSource: null
     }
-    this.selectImageHandler = this.selectImageHandler.bind(this);
+    this.imagePickerHandler = this.imagePickerHandler.bind(this);
   }
 
   componentDidMount() {
     // // When the Generate tab is clicked, prompt the user to take or upload a photo
     // // Right now, this is triggered when any of the menu items are clicked...
-    // this.selectImageHandler();
+    // this.imagePickerHandler();
   }
 
-  selectImageHandler() {
-    ImagePicker.showImagePicker({ title: 'Take a picture or select one from your library!' }, response => {
+  // // This would directly launch the camera, skipping the alert dialog
+  // // Not sure which option I want to do yet
+  // cameraHandler() {
+  //   ImagePicker.launchCamera(response  => {
+  //     if (response.didCancel) {
+  //       console.log('User cancelled image picker');
+  //     } else if (response.error) {
+  //       console.log('ImagePicker Error: ', response.error);
+  //     } else {
+  //       // Image source needs an object with a uri property
+  //       let source = { uri: response.uri };
+  //       this.setState({
+  //         image: {
+  //           value: source
+  //         }
+  //       })
+  //     }
+  //   });
+  // }
+
+  imagePickerHandler() {
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true
+      }
+    }
+
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Response =', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
@@ -28,7 +59,7 @@ class GenerateScreen extends Component {
         // Image source needs an object with a uri property
         let source = { uri: response.uri };
         this.setState({
-          selectedImage: source
+          imageSource: source
         })
       }
     })
@@ -37,10 +68,26 @@ class GenerateScreen extends Component {
   render() {
     return (
       <View>
-        <Button title="Upload an Image!" onPress={this.selectImageHandler} />
+        <TouchableOpacity onPress={this.imagePickerHandler}>
+          <View style={styles.imageContainer}>
+            {this.state.imageSource === null ?
+              <Text>Upload or take a photo!</Text> :
+              <Image source={this.state.imageSource} style={styles.imageContainer} />
+            }
+          </View>
+        </TouchableOpacity>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  imageContainer: {
+    height: 300,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9B9B9B'
+  }
+})
 
 export default GenerateScreen;

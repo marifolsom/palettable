@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string></string>
+	<string>Access photo library to add images.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Take a picture!</string>
+	<string>Access camera to capture image.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Select an image to upload</string>
+	<string>Access photo library to pick images.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
