@@ -4156,6 +4156,10 @@ react-native-navigation@^1.1.452:
   dependencies:
     lodash "4.x.x"
 
+react-native-palette@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-palette/-/react-native-palette-0.3.2.tgz#56579d222618678f4b650100e2d7796560480da5"
+
 react-native@0.55.3:
   version "0.55.3"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.55.3.tgz#6ff1691bd0645d0480fba16377edb9dce5bd28c4"

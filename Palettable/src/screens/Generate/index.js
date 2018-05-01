@@ -2,26 +2,23 @@ import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
+import { getAllSwatches } from 'react-native-palette';
 
 class GenerateScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
       // Store the selected image's URI path
-      imageSource: null
+      imageSource: null,
+      palette: null
     }
     this.imagePickerHandler = this.imagePickerHandler.bind(this);
-  }
-
-  componentDidMount() {
-    // // When the Generate tab is clicked, prompt the user to take or upload a photo
-    // // Right now, this is triggered when any of the menu items are clicked...
-    // this.imagePickerHandler();
+    this.generatePaletteHandler = this.generatePaletteHandler.bind(this);
   }
 
   // // This would directly launch the camera, skipping the alert dialog
   // // Not sure which option I want to do yet
-  // cameraHandler() {
+  // imagePickerHandler() {
   //   ImagePicker.launchCamera(response  => {
   //     if (response.didCancel) {
   //       console.log('User cancelled image picker');
@@ -50,18 +47,36 @@ class GenerateScreen extends Component {
     }
 
     ImagePicker.showImagePicker(options, response => {
-      console.log('Response =', response);
+      console.log('Image Picker Response:', response);
       if (response.didCancel) {
         console.log('User cancelled image picker');
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
         // Image source needs an object with a URI property
-        let source = { uri: response.uri };
+        let path = { uri: response.uri };
         this.setState({
-          imageSource: source
+          imageSource: path
         })
-        console.log(this.state.imageSource, typeof this.state.imageSource);
+        // console.log(this.state.imageSource, typeof this.state.imageSource);
+      }
+    })
+  }
+
+  generatePaletteHandler() {
+    const path = this.state.imageSource.uri;
+    console.log(path);
+    getAllSwatches({}, path, (error, swatches) => {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log(swatches);
+        // swatches.sort((a, b) => {
+        //   return b.population - a.population;
+        // })
+        swatches.forEach(swatch => {
+          console.log(swatch.swatchInfo);
+        })
       }
     })
   }
@@ -76,7 +91,10 @@ class GenerateScreen extends Component {
         ) : (
           <View style={styles.imageContainer}>
             <Image source={this.state.imageSource} style={styles.imageContainer} />
-            <Button title="Take a different photo" onPress={this.imagePickerHandler} />
+            <View style={styles.buttons}>
+              <Button title="Retake" onPress={this.imagePickerHandler} />
+              <Button title="Generate!" onPress={this.generatePaletteHandler} />
+            </View>
           </View>
         )}
       </View>
@@ -90,11 +108,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  // Need to figure out how to handle horizontal photos -- utilize isVertical property
   imageContainer: {
     height: 500,
     width: 375,
     justifyContent: 'center',
     alignItems: 'center'
+  },
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   }
 })
 
