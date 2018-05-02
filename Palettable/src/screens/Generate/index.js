@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
   imageContainerHorizontal: {
     justifyContent: 'center',
     alignItems: 'center',
-    height: 300,
-    width: 400
+    height: 281.25,
+    width: 375
   },
   buttons: {
     display: 'flex',
