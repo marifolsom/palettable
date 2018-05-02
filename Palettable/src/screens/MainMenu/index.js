@@ -5,6 +5,7 @@ import startMainTabs from '../MainTabs/startMainTabs';
 import { Fonts } from '../../utils/Fonts';
 
 class MainMenuScreen extends Component {
+  // Make a function that starts the bottom nav bar
   navHandler() {
     startMainTabs();
   }
@@ -16,8 +17,7 @@ class MainMenuScreen extends Component {
         <Image source={require('Palettable/assets/img/palettable-logo.png')} style={styles.imageContainer} />
         <Button title="Discover" onPress={() => this.navHandler()} />
         <Button title="Generate" onPress={() => this.navHandler()} />
-        <Button title="Favorites" onPress={() => this.navHandler()} />
-        <Button title="Login" onPress={() => this.navHandler()} />
+        <Button title="Login or Register" onPress={() => this.navHandler()} />
       </View>
     )
   }
@@ -30,11 +30,10 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   header: {
-    fontSize: 40,
+    fontSize: 45,
     fontFamily: Fonts.QuicksandMedium,
-    textAlign: 'left',
     color: '#000000',
-    opacity: 0.85,
+    opacity: 0.85
   },
   imageContainer: {
     height: 100,

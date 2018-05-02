@@ -19,7 +19,6 @@ Navigation.registerComponent('palettable.FavoritesScreen', () => FavoritesScreen
 // Start the app
 Navigation.startSingleScreenApp({
   screen: {
-    screen: 'palettable.MainMenuScreen',
-    title: 'Palettable'
+    screen: 'palettable.MainMenuScreen'
   }
 })

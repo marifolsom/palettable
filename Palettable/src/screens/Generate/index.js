@@ -10,7 +10,7 @@ class GenerateScreen extends Component {
     this.state = {
       // Store the selected image's URI path
       imageSource: null,
-      palette: null
+      palette: []
     }
     this.imagePickerHandler = this.imagePickerHandler.bind(this);
     this.generatePaletteHandler = this.generatePaletteHandler.bind(this);
@@ -36,7 +36,9 @@ class GenerateScreen extends Component {
   //   });
   // }
 
+  // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the imageSource state
   imagePickerHandler() {
+    // Set options
     const options = {
       quality: 1.0,
       maxWidth: 500,
@@ -45,7 +47,7 @@ class GenerateScreen extends Component {
         skipBackup: true
       }
     }
-
+    // Display the image picker menu, and log the response based on the user's actions
     ImagePicker.showImagePicker(options, response => {
       console.log('Image Picker Response:', response);
       if (response.didCancel) {
@@ -55,17 +57,20 @@ class GenerateScreen extends Component {
       } else {
         // Image source needs an object with a URI property
         let path = { uri: response.uri };
+        // Update the state
         this.setState({
           imageSource: path
         })
-        // console.log(this.state.imageSource, typeof this.state.imageSource);
       }
     })
   }
 
+  // Make a function that takes the imageSource, extracts the prominent colors, and updates the state with the photo's palette
   generatePaletteHandler() {
     const path = this.state.imageSource.uri;
     console.log(path);
+    // Options are 'threshold' (determines whether white or black text will be selected to contrast with the selected color) and 'quality' (higher quality extracts more colors) -- by default the values are 0.179 and 'low'
+    // Just sticking with the default for now
     getAllSwatches({}, path, (error, swatches) => {
       if (error) {
         console.log(error);
