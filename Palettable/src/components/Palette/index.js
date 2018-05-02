@@ -27,7 +27,7 @@ class Palette extends Component {
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
         const palette = JSON.parse(http.responseText).result;
-        // console.log(palette);
+        console.log(palette);
         self.setState({
           palette: palette
         })
