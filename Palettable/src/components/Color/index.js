@@ -33,7 +33,7 @@ class Color extends Component {
       { backgroundColor: `#${this.state.hexValue}` }
     ])
 
-    console.log(this.state.lightOrDark);
+    // console.log(this.state.lightOrDark);
 
     return (
       <View style={colorBackground}>

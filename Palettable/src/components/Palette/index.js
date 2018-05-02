@@ -27,7 +27,7 @@ class Palette extends Component {
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
         const palette = JSON.parse(http.responseText).result;
-        console.log(palette);
+        // console.log(palette);
         self.setState({
           palette: palette
         })
@@ -42,7 +42,7 @@ class Palette extends Component {
     // Loop over array of rgb values, convert to hex, and create a color component with its hex value passed as a prop
     const colors = this.state.palette.map(color => {
       const hexValue = rgbToHex(Number(color[0]), Number(color[1]), Number(color[3]));
-      console.log(hexValue);
+      // console.log(hexValue);
       return <Color key={hexValue} hexValue={hexValue} />
     })
 
