@@ -3,6 +3,7 @@ import { Text, View, Image, StyleSheet, Button, TouchableOpacity, Platform } fro
 
 import ImagePicker from 'react-native-image-picker';
 import { getAllSwatches } from 'react-native-palette';
+import rgbToHex from 'rgb-hex';
 
 class GenerateScreen extends Component {
   constructor(props) {
@@ -20,18 +21,18 @@ class GenerateScreen extends Component {
   // // Not sure which option I want to do yet
   // imagePickerHandler() {
   //   ImagePicker.launchCamera(response  => {
+  //     console.log('Image Picker Response:', response);
   //     if (response.didCancel) {
   //       console.log('User cancelled image picker');
   //     } else if (response.error) {
   //       console.log('ImagePicker Error: ', response.error);
   //     } else {
-  //       // Image source needs an object with a uri property
-  //       let source = { uri: response.uri };
+  //       // Update the state
   //       this.setState({
-  //         imageResponse: source
+  //         imageResponse: response
   //       })
   //     }
-  //   });
+  //   })
   // }
 
   // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the imageResponse state
@@ -64,21 +65,31 @@ class GenerateScreen extends Component {
   // Make a function that takes the imageResponse, extracts the prominent colors, and updates the state with the photo's palette
   generatePaletteHandler() {
     // const path =  Platform.OS === 'ios' ? response.origURL : response.path;
-    const path = this.state.imageResponse.uri;
+    const path = this.state.imageResponse.origURL;
     console.log(path);
     // Options are 'threshold' (determines whether white or black text will be selected to contrast with the selected color) and 'quality' (higher quality extracts more colors) -- by default the values are 0.179 and 'low'
     // Just sticking with the default for now
-    getAllSwatches({}, path, (error, swatches) => {
+    getAllSwatches({ quality: 'medium' }, path, (error, swatches) => {
       if (error) {
         console.log(error);
       } else {
-        console.log(swatches);
-        // swatches.sort((a, b) => {
-        //   return b.population - a.population;
-        // })
-        swatches.forEach(swatch => {
-          console.log(swatch.swatchInfo);
+        // console.log(swatches);
+        hexValueArray = [];
+        swatches.sort((a, b) => {
+          return b.population - a.population;
         })
+        swatches.forEach(swatch => {
+          // console.log(swatch.color); // looks like: rgba(216, 194, 173, 1)
+          rgbaArray = swatch.color.split(/[(), ]/);
+          // console.log(rgbaArray); // looks like: ["rgba", "121", "", "121", "", "138", "", "1", ""]
+          const hexValue = rgbToHex(Number(rgbaArray[1]), Number(rgbaArray[3]), Number(rgbaArray[5]));
+          // console.log(hexValue);
+          hexValueArray.push(hexValue);
+        })
+        this.setState({
+          palette: hexValueArray
+        })
+        console.log(hexValueArray);
       }
     })
   }
