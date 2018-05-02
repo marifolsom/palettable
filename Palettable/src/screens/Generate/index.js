@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Text, View, Image, StyleSheet, Button, TouchableOpacity, Platform } from 'react-native';
 
 import ImagePicker from 'react-native-image-picker';
 import { getAllSwatches } from 'react-native-palette';
@@ -9,7 +9,7 @@ class GenerateScreen extends Component {
     super(props);
     this.state = {
       // Store the selected image's URI path
-      imageSource: null,
+      imageResponse: null,
       palette: []
     }
     this.imagePickerHandler = this.imagePickerHandler.bind(this);
@@ -28,15 +28,13 @@ class GenerateScreen extends Component {
   //       // Image source needs an object with a uri property
   //       let source = { uri: response.uri };
   //       this.setState({
-  //         image: {
-  //           value: source
-  //         }
+  //         imageResponse: source
   //       })
   //     }
   //   });
   // }
 
-  // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the imageSource state
+  // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the imageResponse state
   imagePickerHandler() {
     // Set options
     const options = {
@@ -55,19 +53,18 @@ class GenerateScreen extends Component {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        // Image source needs an object with a URI property
-        let path = { uri: response.uri };
         // Update the state
         this.setState({
-          imageSource: path
+          imageResponse: response
         })
       }
     })
   }
 
-  // Make a function that takes the imageSource, extracts the prominent colors, and updates the state with the photo's palette
+  // Make a function that takes the imageResponse, extracts the prominent colors, and updates the state with the photo's palette
   generatePaletteHandler() {
-    const path = this.state.imageSource.uri;
+    // const path =  Platform.OS === 'ios' ? response.origURL : response.path;
+    const path = this.state.imageResponse.uri;
     console.log(path);
     // Options are 'threshold' (determines whether white or black text will be selected to contrast with the selected color) and 'quality' (higher quality extracts more colors) -- by default the values are 0.179 and 'low'
     // Just sticking with the default for now
@@ -89,13 +86,17 @@ class GenerateScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.state.imageSource === null ? (
-          <TouchableOpacity onPress={this.imagePickerHandler} style={styles.imageContainer}>
+        {this.state.imageResponse === null ? (
+          <TouchableOpacity onPress={this.imagePickerHandler} style={styles.imageContainerVertical}>
             <Text>Upload or take a photo!</Text>
           </TouchableOpacity>
         ) : (
-          <View style={styles.imageContainer}>
-            <Image source={this.state.imageSource} style={styles.imageContainer} />
+          <View style={styles.imageContainerVertical}>
+            {this.state.imageResponse.isVertical === true ? (
+              <Image source={this.state.imageResponse} style={styles.imageContainerVertical} />
+            ) : (
+              <Image source={this.state.imageResponse} style={styles.imageContainerHorizontal} />
+            )}
             <View style={styles.buttons}>
               <Button title="Retake" onPress={this.imagePickerHandler} />
               <Button title="Generate!" onPress={this.generatePaletteHandler} />
@@ -113,12 +114,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  // Need to figure out how to handle horizontal photos -- utilize isVertical property
-  imageContainer: {
-    height: 500,
-    width: 375,
+  imageContainerVertical: {
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    height: 500,
+    width: 375
+  },
+  imageContainerHorizontal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 300,
+    width: 400
   },
   buttons: {
     display: 'flex',

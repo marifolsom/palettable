@@ -10,7 +10,7 @@
 ## Explanations of the technologies used
 - React Native — a framework for building native mobile apps
 - Xcode — a software development environment that allows you to simulate your app on an iPhone
-- COLOURlovers API — color palette API, used to randomly generate a color palette on the discover page
+- Colormind API — color palette API that allows you to randomly generate a color palette and get color suggestions
 - `hex-rgb`/`rgb-hex` — converts hex to rgb or rgb to hex
 - `react-native-navigation` - a React Native navigation module (nav bars, tab bars, side menu drawers)
 - `react-native-image-picker` - a React Native module that allows you to use native UI to select a photo/video from the device library or directly from the camera
