@@ -4,6 +4,7 @@ import { Text, View, Image, StyleSheet, Button, TouchableOpacity, Platform } fro
 import ImagePicker from 'react-native-image-picker';
 import { getAllSwatches } from 'react-native-palette';
 import rgbToHex from 'rgb-hex';
+import Palette from '../../components/Palette';
 
 class GenerateScreen extends Component {
   constructor(props) {
@@ -89,29 +90,37 @@ class GenerateScreen extends Component {
         this.setState({
           palette: hexValueArray
         })
-        console.log(hexValueArray);
+        // console.log(hexValueArray);
       }
     })
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        {this.state.imageResponse === null ? (
-          <TouchableOpacity onPress={this.imagePickerHandler} style={styles.imageContainerVertical}>
-            <Text>Upload or take a photo!</Text>
-          </TouchableOpacity>
+      <View>
+        {this.state.palette.length > 0 ? (
+          <View>
+            <Palette hexValueArray={this.state.palette} />
+          </View>
         ) : (
-          <View style={styles.imageContainerVertical}>
-            {this.state.imageResponse.isVertical === true ? (
-              <Image source={this.state.imageResponse} style={styles.imageContainerVertical} />
+          <View>
+            {this.state.imageResponse === null ? (
+              <TouchableOpacity onPress={this.imagePickerHandler} style={styles.imageContainerVertical}>
+                <Text>Upload or take a photo!</Text>
+              </TouchableOpacity>
             ) : (
-              <Image source={this.state.imageResponse} style={styles.imageContainerHorizontal} />
+              <View style={styles.imageContainerVertical}>
+                {this.state.imageResponse.isVertical === true ? (
+                  <Image source={this.state.imageResponse} style={styles.imageContainerVertical} />
+                ) : (
+                  <Image source={this.state.imageResponse} style={styles.imageContainerHorizontal} />
+                )}
+                <View style={styles.buttons}>
+                  <Button title="Retake" onPress={this.imagePickerHandler} />
+                  <Button title="Generate!" onPress={this.generatePaletteHandler} />
+                </View>
+              </View>
             )}
-            <View style={styles.buttons}>
-              <Button title="Retake" onPress={this.imagePickerHandler} />
-              <Button title="Generate!" onPress={this.generatePaletteHandler} />
-            </View>
           </View>
         )}
       </View>

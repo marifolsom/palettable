@@ -27,7 +27,7 @@ class Palette extends Component {
     http.onreadystatechange = function() {
       if(http.readyState == 4 && http.status == 200) {
         const palette = JSON.parse(http.responseText).result;
-        console.log(palette);
+        // console.log(palette);
         self.setState({
           palette: palette
         })
@@ -40,11 +40,26 @@ class Palette extends Component {
 
   render() {
     // Loop over array of rgb values, convert to hex, and create a color component with its hex value passed as a prop
-    const colors = this.state.palette.map(color => {
-      const hexValue = rgbToHex(Number(color[0]), Number(color[1]), Number(color[3]));
-      // console.log(hexValue);
-      return <Color key={hexValue} hexValue={hexValue} />
-    })
+    let colors = {};
+    if (this.props.hexValueArray !== undefined) {
+      console.log(this.props.hexValueArray);
+      colors = this.props.hexValueArray.map(color => {
+        console.log(color);
+        return <Color key={color} hexValue={color} />
+      })
+    } else {
+      colors = this.state.palette.map(color => {
+        const hexValue = rgbToHex(Number(color[0]), Number(color[1]), Number(color[3]));
+        // console.log(hexValue);
+        return <Color key={hexValue} hexValue={hexValue} />
+      })
+    }
+
+    // colors = this.state.palette.map(color => {
+    //   const hexValue = rgbToHex(Number(color[0]), Number(color[1]), Number(color[3]));
+    //   // console.log(hexValue);
+    //   return <Color key={hexValue} hexValue={hexValue} />
+    // })
 
     return (
       <View onPress={this.fetchRandomPalette}>
