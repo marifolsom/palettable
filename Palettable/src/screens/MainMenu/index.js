@@ -12,24 +12,24 @@ class MainMenuScreen extends Component {
   }
 
   discoverTabHandler() {
-    this.props.navigator.push({
-      screen: 'palettable.DiscoverScreen'
-    })
     startMainTabs(0);
+    this.props.navigator.switchToTab({
+      tabIndex: 0
+    })
   }
 
   generateTabHandler() {
-    this.props.navigator.push({
-      screen: 'palettable.GenerateScreen'
-    })
     startMainTabs(1);
+    this.props.navigator.switchToTab({
+      tabIndex: 1
+    })
   }
 
   authTabHandler() {
-    this.props.navigator.push({
-      screen: 'palettable.AuthScreen'
-    })
     startMainTabs(3);
+    this.props.navigator.switchToTab({
+      tabIndex: 3
+    })
   }
 
   render() {
