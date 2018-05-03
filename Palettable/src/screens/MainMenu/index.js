@@ -4,31 +4,10 @@ import startMainTabs from '../MainTabs/startMainTabs';
 import { Fonts } from '../../utils/Fonts';
 
 class MainMenuScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.discoverTabHandler = this.discoverTabHandler.bind(this);
-    this.generateTabHandler = this.generateTabHandler.bind(this);
-    this.authTabHandler = this.authTabHandler.bind(this);
-  }
-
-  discoverTabHandler() {
-    startMainTabs(0);
+  tabHandler(tabIndex) {
+    startMainTabs(tabIndex);
     this.props.navigator.switchToTab({
-      tabIndex: 0
-    })
-  }
-
-  generateTabHandler() {
-    startMainTabs(1);
-    this.props.navigator.switchToTab({
-      tabIndex: 1
-    })
-  }
-
-  authTabHandler() {
-    startMainTabs(3);
-    this.props.navigator.switchToTab({
-      tabIndex: 3
+      tabIndex: tabIndex
     })
   }
 
@@ -37,9 +16,9 @@ class MainMenuScreen extends Component {
       <View style={styles.container}>
         <Text style={styles.header}>Palettable</Text>
         <Image source={require('Palettable/assets/img/palettable-logo.png')} style={styles.imageContainer} />
-        <Button title="Discover" onPress={this.discoverTabHandler} />
-        <Button title="Generate" onPress={this.generateTabHandler} />
-        <Button title="Login or Register" onPress={this.authTabHandler} />
+        <Button title="Discover" onPress={this.tabHandler.bind(this, 0)} />
+        <Button title="Generate" onPress={this.tabHandler.bind(this, 1)} />
+        <Button title="Login or Register" onPress={this.tabHandler.bind(this, 3)} />
       </View>
     )
   }
