@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, TextInput } from 'react-native';
+import Login from '../../components/Login';
+import Register from '../../components/Register';
 
 class AuthScreen extends Component {
   render() {
     return (
       <View>
-        <Text>This is Auth</Text>
+        <Login />
+        <Register />
       </View>
     )
   }
