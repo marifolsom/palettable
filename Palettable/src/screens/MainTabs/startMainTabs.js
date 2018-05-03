@@ -1,6 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 
-const startTabs = () => {
+const startTabs = (tabIndex) => {
   Navigation.startTabBasedApp({
     tabs: [
       {
@@ -27,7 +27,10 @@ const startTabs = () => {
         label: 'Login',
         title: 'Login'
       }
-    ]
+    ],
+    tabsStyle: {
+      initialTabIndex: tabIndex, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
+    }
   })
 }
 

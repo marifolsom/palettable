@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, TouchableHighlight } from 'react-native';
-
 import Color from '../Color';
 import rgbToHex from 'rgb-hex';
 
@@ -78,12 +77,18 @@ class Palette extends Component {
     }
 
     return (
-      <View onPress={this.fetchRandomPalette}>
-        <TouchableHighlight onPress={this.fetchRandomPalette}>
+      <View>
+        {this.props.hexValueArray !== undefined ? (
           <View>
             {colors}
           </View>
-        </TouchableHighlight>
+        ) : (
+          <TouchableHighlight onPress={this.fetchRandomPalette}>
+            <View>
+              {colors}
+            </View>
+          </TouchableHighlight>
+        )}
       </View>
     )
   }

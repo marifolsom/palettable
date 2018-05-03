@@ -1,6 +1,4 @@
 import { Navigation } from 'react-native-navigation';
-// import { registerScreens } from './src/screens';
-// registerScreens()
 
 import AuthScreen from './src/screens/Auth';
 import MainMenuScreen from './src/screens/MainMenu';

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, Button, TouchableOpacity, Platform } from 'react-native';
-
 import ImagePicker from 'react-native-image-picker';
 import { getAllSwatches } from 'react-native-palette';
 import rgbToHex from 'rgb-hex';
@@ -18,23 +17,12 @@ class GenerateScreen extends Component {
     this.generatePaletteHandler = this.generatePaletteHandler.bind(this);
   }
 
-  // // This would directly launch the camera, skipping the alert dialog
-  // // Not sure which option I want to do yet
-  // imagePickerHandler() {
-  //   ImagePicker.launchCamera(response  => {
-  //     console.log('Image Picker Response:', response);
-  //     if (response.didCancel) {
-  //       console.log('User cancelled image picker');
-  //     } else if (response.error) {
-  //       console.log('ImagePicker Error: ', response.error);
-  //     } else {
-  //       // Update the state
-  //       this.setState({
-  //         imageResponse: response
-  //       })
-  //     }
-  //   })
-  // }
+  componentDidMount() {
+    // // All nav tab page components mount at the same time
+    // if (this.state.imageResponse === null) {
+    //   this.imagePickerHandler();
+    // }
+  }
 
   // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the imageResponse state
   imagePickerHandler() {
@@ -74,7 +62,6 @@ class GenerateScreen extends Component {
       if (error) {
         console.log(error);
       } else {
-        // console.log(swatches);
         hexValueArray = [];
         swatches.sort((a, b) => {
           return b.population - a.population;
@@ -84,13 +71,11 @@ class GenerateScreen extends Component {
           rgbaArray = swatch.color.split(/[(), ]/);
           // console.log(rgbaArray); // looks like: ["rgba", "121", "", "121", "", "138", "", "1", ""]
           const hexValue = rgbToHex(Number(rgbaArray[1]), Number(rgbaArray[3]), Number(rgbaArray[5]));
-          // console.log(hexValue);
           hexValueArray.push(hexValue);
         })
         this.setState({
           palette: hexValueArray
         })
-        // console.log(hexValueArray);
       }
     })
   }
@@ -105,6 +90,7 @@ class GenerateScreen extends Component {
         ) : (
           <View>
             {this.state.imageResponse === null ? (
+              // <TouchableOpacity style={styles.imageContainerVertical}>
               <TouchableOpacity onPress={this.imagePickerHandler} style={styles.imageContainerVertical}>
                 <Text>Upload or take a photo!</Text>
               </TouchableOpacity>
