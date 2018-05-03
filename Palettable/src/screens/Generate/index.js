@@ -35,7 +35,7 @@ class GenerateScreen extends Component {
   // Make a function that takes the photoInfo, extracts the prominent colors, and updates the state with the photo's palette
   generatePaletteHandler() {
     console.log(this.state);
-    // react-native-palette requires a origURL that looks like this:
+    // react-native-palette requires a path that looks like this:
     // assets-library://asset/asset.HEIC?id=FFA54FF0-392F-432B-B408-3926AFD64DCA&ext=HEIC
     const path = this.state.photoInfo.path;
     console.log(path);

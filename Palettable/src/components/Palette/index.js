@@ -22,12 +22,11 @@ class Palette extends Component {
     fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
       .then(apiResponse => apiResponse.json())
       .then(paletteInfo => {
-        console.log(paletteInfo[0].colors);
-        console.log(paletteInfo[0].colors.length);
+        // console.log(paletteInfo[0].colors);
         // If the palette length is not 5, fetch again
         // Probably a better way to do this?
         if (paletteInfo[0].colors.length !== 5) {
-          console.log('Palette is too long/short');
+          console.log('Palette is too long/short, fetch again');
           fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
             .then(apiResponse => apiResponse.json())
             .then(paletteInfo => {
@@ -70,6 +69,7 @@ class Palette extends Component {
 
   render() {
     let colors = {};
+    // If
     if (this.props.hexValueArray !== undefined) {
       // Loop over hexValueArray, and create a color component with each hex value passed as a prop
       colors = this.props.hexValueArray.map(color => {
@@ -92,11 +92,13 @@ class Palette extends Component {
 
     return (
       <View>
+        {/* If the palette is coming from the 'Generate' screen, render the colors without a TouchableHighlight */}
         {this.props.hexValueArray !== undefined ? (
           <View>
             {colors}
           </View>
         ) : (
+          // Otherwise render the TouchableHighlight that will fetch a random color palette on press
           <TouchableHighlight onPress={this.fetchRandomPalette}>
             <View>
               {colors}

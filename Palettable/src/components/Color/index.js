@@ -32,8 +32,6 @@ class Color extends Component {
       { backgroundColor: `#${this.state.hexValue}` }
     ])
 
-    // console.log(this.state.lightOrDark);
-
     return (
       <View style={colorBackground}>
         <Text style={[styles.hexValue, this.state.lightOrDark === 'dark' ? styles.hexValueDark : styles.hexValueLight]}>
