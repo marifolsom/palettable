@@ -4,6 +4,7 @@ import ImagePicker from 'react-native-image-picker';
 import { getAllSwatches } from 'react-native-palette';
 import rgbToHex from 'rgb-hex';
 import Palette from '../../components/Palette';
+import { RNCamera } from 'react-native-camera';
 
 class GenerateScreen extends Component {
   constructor(props) {
@@ -18,7 +19,8 @@ class GenerateScreen extends Component {
   }
 
   componentDidMount() {
-    // // All nav tab page components mount at the same time
+    // // All nav tab page components are mounted at the same time, so this alert happens when any of the tabs are clicked...
+    // // Need to figure out how to only do it when the 'Generate' button is pressed
     // if (this.state.imageResponse === null) {
     //   this.imagePickerHandler();
     // }
@@ -32,7 +34,7 @@ class GenerateScreen extends Component {
       maxWidth: 500,
       maxHeight: 500,
       storageOptions: {
-        skipBackup: true
+        cameraRoll: true
       }
     }
     // Display the image picker menu, and log the response based on the user's actions
@@ -53,11 +55,11 @@ class GenerateScreen extends Component {
 
   // Make a function that takes the imageResponse, extracts the prominent colors, and updates the state with the photo's palette
   generatePaletteHandler() {
+    // react-native-palette requires a origURL that looks like this:
+    // assets-library://asset/asset.HEIC?id=FFA54FF0-392F-432B-B408-3926AFD64DCA&ext=HEIC
     // const path =  Platform.OS === 'ios' ? response.origURL : response.path;
     const path = this.state.imageResponse.origURL;
     console.log(path);
-    // Options are 'threshold' (determines whether white or black text will be selected to contrast with the selected color) and 'quality' (higher quality extracts more colors) -- by default the values are 0.179 and 'low'
-    // Just sticking with the default for now
     getAllSwatches({ quality: 'medium' }, path, (error, swatches) => {
       if (error) {
         console.log(error);
@@ -67,6 +69,7 @@ class GenerateScreen extends Component {
           return b.population - a.population;
         })
         swatches.forEach(swatch => {
+          // A little janky, may be a better way to do this?
           // console.log(swatch.color); // looks like: rgba(216, 194, 173, 1)
           rgbaArray = swatch.color.split(/[(), ]/);
           // console.log(rgbaArray); // looks like: ["rgba", "121", "", "121", "", "138", "", "1", ""]
@@ -82,8 +85,27 @@ class GenerateScreen extends Component {
 
   render() {
     return (
-      <View>
-        {this.state.palette.length > 0 ? (
+      <View View style={styles.container}>
+        <RNCamera
+            ref={ref => {
+              this.camera = ref;
+            }}
+            style = {styles.preview}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            permissionDialogTitle={'Permission to use camera'}
+            permissionDialogMessage={'We need your permission to use your camera phone'}
+        />
+        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
+        <TouchableOpacity
+            onPress={this.takePicture.bind(this)}
+            style = {styles.capture}
+        >
+            <Text style={{fontSize: 14}}> SNAP </Text>
+        </TouchableOpacity>
+        </View>
+
+        {/* {this.state.palette.length > 0 ? (
           <View>
             <Palette hexValueArray={this.state.palette} />
           </View>
@@ -108,9 +130,17 @@ class GenerateScreen extends Component {
               </View>
             )}
           </View>
-        )}
+        )} */}
       </View>
     )
+  }
+
+  takePicture = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options);
+      console.log(data);
+    }
   }
 }
 
@@ -136,6 +166,19 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  container: {
+    flex: 1,
+    flexDirection: "column",
+    backgroundColor: "white"
+  },
+  preview: {
+    flex: 1,
+    justifyContent: "flex-end",
+    alignItems: "center"
+  },
+  buttonContainer: {
+    justifyContent: "flex-end"
   }
 })
 
