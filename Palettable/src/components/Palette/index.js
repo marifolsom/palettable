@@ -23,9 +23,23 @@ class Palette extends Component {
       .then(apiResponse => apiResponse.json())
       .then(paletteInfo => {
         console.log(paletteInfo[0].colors);
-        this.setState({
-          palette: paletteInfo[0].colors
-        })
+        console.log(paletteInfo[0].colors.length);
+        // If the palette length is not 5, fetch again
+        // Probably a better way to do this?
+        if (paletteInfo[0].colors.length !== 5) {
+          console.log('Palette is too long/short');
+          fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
+            .then(apiResponse => apiResponse.json())
+            .then(paletteInfo => {
+              this.setState({
+                palette: paletteInfo[0].colors
+              })
+            })
+        } else {
+          this.setState({
+            palette: paletteInfo[0].colors
+          })
+        }
       })
       .catch(error => {
         console.log('There has been a problem with your fetch operation: ' + error.message);

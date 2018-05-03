@@ -47,6 +47,7 @@ class Color extends Component {
 const styles = StyleSheet.create({
   swatch: {
     height: 110.5,
+    width: 375,
     paddingLeft: 30,
     display: 'flex',
     flexDirection: 'row',
