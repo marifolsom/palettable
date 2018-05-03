@@ -16,7 +16,6 @@
     "react": "16.3.1",
     "react-native": "0.55.3",
     "react-native-camera": "^1.1.2",
-    "react-native-firebase": "^4.0.6",
     "react-native-image-picker": "^0.26.7",
     "react-native-navigation": "^1.1.452",
     "react-native-palette": "^0.3.2",

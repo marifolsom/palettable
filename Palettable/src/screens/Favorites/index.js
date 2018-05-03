@@ -5,7 +5,7 @@ class FavoritesScreen extends Component {
   render() {
     return (
       <View>
-        <Text>This is Favorites</Text>
+        <Text>Favorited Palettes</Text>
       </View>
     )
   }

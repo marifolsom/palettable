@@ -60,13 +60,13 @@ class Palette extends Component {
       // Loop over hexValueArray, and create a color component with each hex value passed as a prop
       colors = this.props.hexValueArray.map(color => {
         // console.log(color);
-        return <Color key={color} hexValue={color} />
+        return <Color key={color} hexValue={color} />;
       })
     } else {
       // Loop over array of rgb values, convert to hex, and create a color component with each hex value passed as a prop
       // // COLORlovers API
       colors = this.state.palette.map(color => {
-        return <Color key={color} hexValue={color} />
+        return <Color key={color} hexValue={color} />;
       })
       // // Colormind API
       // colors = this.state.palette.map(color => {

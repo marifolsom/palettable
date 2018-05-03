@@ -1,64 +1,43 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, Button, TouchableOpacity, Platform } from 'react-native';
-import ImagePicker from 'react-native-image-picker';
 import { getAllSwatches } from 'react-native-palette';
 import rgbToHex from 'rgb-hex';
 import Palette from '../../components/Palette';
-import { RNCamera } from 'react-native-camera';
+import Camera from 'react-native-camera';
 
 class GenerateScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      // Store the selected image's URI path
-      imageResponse: null,
+      photoInfo: null,
       palette: []
     }
-    this.imagePickerHandler = this.imagePickerHandler.bind(this);
+    // this.imagePickerHandler = this.imagePickerHandler.bind(this);
+    this.takePictureHandler = this.takePictureHandler.bind(this);
     this.generatePaletteHandler = this.generatePaletteHandler.bind(this);
   }
 
-  componentDidMount() {
-    // // All nav tab page components are mounted at the same time, so this alert happens when any of the tabs are clicked...
-    // // Need to figure out how to only do it when the 'Generate' button is pressed
-    // if (this.state.imageResponse === null) {
-    //   this.imagePickerHandler();
-    // }
-  }
-
-  // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the imageResponse state
-  imagePickerHandler() {
-    // Set options
-    const options = {
-      quality: 1.0,
-      maxWidth: 500,
-      maxHeight: 500,
-      storageOptions: {
-        cameraRoll: true
-      }
+  // Make a function that prompts the user to take a photo, and stores that selected photo in the photoInfo state
+  takePictureHandler = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.capture();
+      // Image source needs an object with a uri property
+      // Still playing around with the URI and getting the taken photo to show
+      pathHTTPS = `https://${data.path}`
+      const path = { uri: pathHTTPS, path: data.path }
+      this.setState({
+        photoInfo: path
+      })
     }
-    // Display the image picker menu, and log the response based on the user's actions
-    ImagePicker.showImagePicker(options, response => {
-      console.log('Image Picker Response:', response);
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        // Update the state
-        this.setState({
-          imageResponse: response
-        })
-      }
-    })
   }
 
-  // Make a function that takes the imageResponse, extracts the prominent colors, and updates the state with the photo's palette
+  // Make a function that takes the photoInfo, extracts the prominent colors, and updates the state with the photo's palette
   generatePaletteHandler() {
+    console.log(this.state);
     // react-native-palette requires a origURL that looks like this:
     // assets-library://asset/asset.HEIC?id=FFA54FF0-392F-432B-B408-3926AFD64DCA&ext=HEIC
-    // const path =  Platform.OS === 'ios' ? response.origURL : response.path;
-    const path = this.state.imageResponse.origURL;
+    const path = this.state.photoInfo.path;
     console.log(path);
     getAllSwatches({ quality: 'medium' }, path, (error, swatches) => {
       if (error) {
@@ -85,62 +64,42 @@ class GenerateScreen extends Component {
 
   render() {
     return (
-      <View View style={styles.container}>
-        <RNCamera
-            ref={ref => {
-              this.camera = ref;
-            }}
-            style = {styles.preview}
-            type={RNCamera.Constants.Type.back}
-            flashMode={RNCamera.Constants.FlashMode.off}
-            permissionDialogTitle={'Permission to use camera'}
-            permissionDialogMessage={'We need your permission to use your camera phone'}
-        />
-        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
-        <TouchableOpacity
-            onPress={this.takePicture.bind(this)}
-            style = {styles.capture}
-        >
-            <Text style={{fontSize: 14}}> SNAP </Text>
-        </TouchableOpacity>
-        </View>
-
-        {/* {this.state.palette.length > 0 ? (
-          <View>
-            <Palette hexValueArray={this.state.palette} />
-          </View>
+      <View style={styles.container}>
+        {/* If there is a generated palette, display the palette component with the passed hexValueArray */}
+        {this.state.palette.length > 0 ? (
+          <Palette hexValueArray={this.state.palette} />
         ) : (
           <View>
-            {this.state.imageResponse === null ? (
-              // <TouchableOpacity style={styles.imageContainerVertical}>
-              <TouchableOpacity onPress={this.imagePickerHandler} style={styles.imageContainerVertical}>
-                <Text>Upload or take a photo!</Text>
-              </TouchableOpacity>
+            {/* If no photo has been taken, display the camera */}
+            {this.state.photoInfo === null ? (
+              <View>
+                <Camera
+                  ref={cam => (this.camera = cam)}
+                  aspect={Camera.constants.Aspect.fill}
+                  type={Camera.constants.Type.back}
+                  style={styles.preview}
+                  flashMode={Camera.constants.FlashMode.off}
+                  permissionDialogTitle={"Permission to use camera"}
+                  permissionDialogMessage={"We need permission to use the camera on your phone"}
+                />
+                <View>
+                  <Button title="Take the picture!" onPress={this.takePictureHandler} />
+                </View>
+              </View>
             ) : (
-              <View style={styles.imageContainerVertical}>
-                {this.state.imageResponse.isVertical === true ? (
-                  <Image source={this.state.imageResponse} style={styles.imageContainerVertical} />
-                ) : (
-                  <Image source={this.state.imageResponse} style={styles.imageContainerHorizontal} />
-                )}
+              // Otherwise, display the taken image along with a 'Generate!' button
+              <View style={styles.imageContainer}>
+                <Image source={this.state.photoInfo} style={styles.imageContainer} />
                 <View style={styles.buttons}>
-                  <Button title="Retake" onPress={this.imagePickerHandler} />
+                  {/* <Button title="Retake" onPress={this.imagePickerHandler} /> */}
                   <Button title="Generate!" onPress={this.generatePaletteHandler} />
                 </View>
               </View>
             )}
           </View>
-        )} */}
+        )}
       </View>
     )
-  }
-
-  takePicture = async function() {
-    if (this.camera) {
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      console.log(data);
-    }
   }
 }
 
@@ -150,16 +109,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
-  imageContainerVertical: {
+  imageContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     height: 500,
-    width: 375
-  },
-  imageContainerHorizontal: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 281.25,
     width: 375
   },
   buttons: {
@@ -167,18 +120,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between'
   },
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: "white"
-  },
   preview: {
     flex: 1,
     justifyContent: "flex-end",
-    alignItems: "center"
-  },
-  buttonContainer: {
-    justifyContent: "flex-end"
+    alignItems: "center",
+    height: 500,
+    width: 375
   }
 })
 

@@ -24,8 +24,8 @@ const startTabs = (tabIndex) => {
       {
         screen: 'palettable.AuthScreen',
         icon: require('Palettable/assets/img/icons/user-1.png'),
-        label: 'Login',
-        title: 'Login'
+        // label: 'Login',
+        // title: 'Login'
       }
     ],
     tabsStyle: {
