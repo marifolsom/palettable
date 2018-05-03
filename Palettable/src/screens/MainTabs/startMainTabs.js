@@ -29,7 +29,8 @@ const startTabs = (tabIndex) => {
       }
     ],
     tabsStyle: {
-      initialTabIndex: tabIndex, // optional, the default selected bottom tab. Default: 0. On Android, add this to appStyle
+      // tabIndex is passed in by the tabHandler in MainMenu depending on which tab is pressed
+      initialTabIndex: tabIndex
     }
   })
 }

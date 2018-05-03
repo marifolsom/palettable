@@ -12,17 +12,16 @@ class GenerateScreen extends Component {
       photoInfo: null,
       palette: []
     }
-    // this.imagePickerHandler = this.imagePickerHandler.bind(this);
-    this.takePictureHandler = this.takePictureHandler.bind(this);
-    this.generatePaletteHandler = this.generatePaletteHandler.bind(this);
+    this.generatePalette = this.generatePalette.bind(this);
   }
 
   // Make a function that prompts the user to take a photo, and stores that selected photo in the photoInfo state
-  takePictureHandler = async function() {
+  takePicture = async function() {
     if (this.camera) {
-      const options = { quality: 0.5, base64: true };
       const data = await this.camera.capture();
-      // Image source needs an object with a uri property
+      console.log(data);
+      // Image source needs an object with a uri property that looks like this:
+      //file:///var/mobile/Containers/Data/Application/2B0E8125-46C4-4847-A901-E6156E504D1A/Documents/264AA307-F35D-4102-B5F2-ED38329643E1.jpg
       // Still playing around with the URI and getting the taken photo to show
       pathHTTPS = `https://${data.path}`;
       const path = { uri: pathHTTPS, path: data.path };
@@ -33,7 +32,7 @@ class GenerateScreen extends Component {
   }
 
   // Make a function that takes the photoInfo, extracts the prominent colors, and updates the state with the photo's palette
-  generatePaletteHandler() {
+  generatePalette() {
     console.log(this.state);
     // react-native-palette requires a path that looks like this:
     // assets-library://asset/asset.HEIC?id=FFA54FF0-392F-432B-B408-3926AFD64DCA&ext=HEIC
@@ -48,7 +47,7 @@ class GenerateScreen extends Component {
           return b.population - a.population;
         })
         swatches.forEach(swatch => {
-          // A little janky, may be a better way to do this?
+          // A little hacky, may be a better way to do this?
           // console.log(swatch.color); // looks like: rgba(216, 194, 173, 1)
           rgbaArray = swatch.color.split(/[(), ]/);
           // console.log(rgbaArray); // looks like: ["rgba", "121", "", "121", "", "138", "", "1", ""]
@@ -85,16 +84,16 @@ class GenerateScreen extends Component {
                   permissionDialogMessage={"We need permission to use the camera on your phone"}
                 />
                 <View>
-                  <Button title="Take the picture!" onPress={this.takePictureHandler} />
+                  <Button title="Take the picture!" onPress={this.takePicture.bind(this)} />
                 </View>
               </View>
             ) : (
-              // Otherwise, display the taken image along with a 'Generate!' button
+              // Otherwise display the taken image along with 'Generate!' and 'Retake' buttons
               <View style={styles.container}>
                 <Image source={this.state.photoInfo} style={styles.container} />
                 <View style={styles.buttons}>
-                  <Button title="Retake" onPress={this.imagePickerHandler} />
-                  <Button title="Generate!" onPress={this.generatePaletteHandler} />
+                  {/* <Button title="Retake" onPress={this.imagePickerHandler} /> */}
+                  <Button title="Generate!" onPress={this.generatePalette} />
                 </View>
               </View>
             )}

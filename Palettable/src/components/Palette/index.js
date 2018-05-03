@@ -69,15 +69,13 @@ class Palette extends Component {
 
   render() {
     let colors = {};
-    // If
+    // If the palette is coming from the 'Generate' screen, map over hexValueArray and create a color component with each hex value passed as a prop
     if (this.props.hexValueArray !== undefined) {
-      // Loop over hexValueArray, and create a color component with each hex value passed as a prop
       colors = this.props.hexValueArray.map(color => {
-        // console.log(color);
         return <Color key={color} hexValue={color} />;
       })
     } else {
-      // Loop over array of rgb values, convert to hex, and create a color component with each hex value passed as a prop
+      // If the palette is coming from the 'Discover' screen, map over array of rgb values, convert to hex, and create a color component with each hex value passed as a prop
       // // COLORlovers API
       colors = this.state.palette.map(color => {
         return <Color key={color} hexValue={color} />;
