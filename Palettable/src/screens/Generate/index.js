@@ -18,10 +18,11 @@ class GenerateScreen extends Component {
       palette: []
     }
     this.generatePalette = this.generatePalette.bind(this);
+    this.takePicture = this.takePicture.bind(this)
   }
 
   // Make a function that prompts the user to take a photo, and stores that selected photo in the photoInfo state
-  takePicture = async function() {
+  async takePicture() {
     if (this.camera) {
       const data = await this.camera.capture();
       // console.log(data);
@@ -49,7 +50,7 @@ class GenerateScreen extends Component {
           response.outputs[0].data.colors.forEach(color => {
             // Remove hashtag for formatting
             const hexValue = color.raw_hex.substr(1);
-            // Limit length of array
+            // Limit length of array to 5
             if (hexValueArray.length < 5) {
               hexValueArray.push(hexValue);
             }
@@ -87,7 +88,7 @@ class GenerateScreen extends Component {
                   permissionDialogMessage={"We need permission to use the camera on your phone"}
                 />
                 <View>
-                  <Button title="Take Photo" onPress={this.takePicture.bind(this)} />
+                  <Button title="Take Photo" onPress={this.takePicture} />
                 </View>
               </View>
             ) : (
@@ -95,7 +96,7 @@ class GenerateScreen extends Component {
               <View style={styles.container}>
                 <Image source={this.state.photoInfo} style={styles.container} />
                 <View style={styles.buttons}>
-                  {/* <Button title="Retake" onPress={this.takePicture.bind(this)} /> */}
+                  {/* <Button title="Retake" onPress={this.takePicture} /> */}
                   <Button title="Generate Palette!" onPress={this.generatePalette} />
                 </View>
               </View>
