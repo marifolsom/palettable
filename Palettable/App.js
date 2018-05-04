@@ -20,3 +20,6 @@ Navigation.startSingleScreenApp({
     screen: 'palettable.MainMenuScreen'
   }
 })
+
+// Ignore warnings about remote debugger and tab switching
+console.ignoredYellowBox = ['Remote debugger', 'Possible Unhandled Promise Rejection (id: 0)'];

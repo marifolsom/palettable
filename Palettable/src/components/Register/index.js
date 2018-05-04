@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, Button, AlertIOS } from 'react-native';
 import firebase from 'firebase';
+import Database from '../../firebase/Database'
 
 class Register extends Component {
   constructor(props) {
@@ -9,17 +10,28 @@ class Register extends Component {
       email: '',
       password: ''
     }
+    this.register = this.register.bind(this);
   }
 
-  async signup(email, password) {
+  async register() {
+    console.log('Register:', this.state.email, this.state.password);
     try {
       await firebase.auth()
-        .createUserWithEmailAndPassword(email, password);
+        .createUserWithEmailAndPassword(this.state.email, this.state.password);
       console.log('Account created');
-      // Navigate to the Home page, the user is auto logged in
+      // Navigate to the 'Discover' tab, the user is logged in
+      setTimeout(() => {
+        this.props.navigator.switchToTab({
+          tabIndex: 0
+        })
+      }, 1500)
     } catch (error) {
-      console.log(error.toString())
+      console.log(error.toString());
+      AlertIOS.alert(
+        error.toString()
+      )
     }
+    console.log('current user:', firebase.auth().currentUser);
   }
 
   render() {
@@ -28,6 +40,8 @@ class Register extends Component {
         <Text>Register</Text>
           <TextInput
             label="Email Address"
+            autoCorrect={false}
+            autoCapitalize="none"
             placeholder="you@domain.com"
             value={this.state.email}
             onChangeText={email => this.setState({ email })}
@@ -35,11 +49,13 @@ class Register extends Component {
           <TextInput
             label="Password"
             autoCorrect={false}
+            autoCapitalize="none"
+            secureTextEntry={true}
             placeholder="*******"
             value={this.state.password}
             onChangeText={password => this.setState({ password })}
           />
-          {/* <Button title="Register" /> */}
+          <Button title="Register" onPress={this.register} />
       </View>
     )
   }

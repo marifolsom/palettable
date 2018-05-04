@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput } from 'react-native';
+import { Text, View, TextInput, Button, AlertIOS } from 'react-native';
 import Login from '../../components/Login';
 import Register from '../../components/Register';
 import firebase from 'firebase';
@@ -17,11 +17,39 @@ firebase.initializeApp(config);
 
 
 class AuthScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.logout = this.logout.bind(this);
+  }
+
+  async logout() {
+    try {
+      await firebase.auth().signOut();
+      console.log('Logged out');
+      // Navigate to Main Menu
+      setTimeout(() => {
+        this.props.navigator.push({
+          screen: 'palettable.MainMenuScreen'
+        })
+        // this.props.navigator.toggleNavBar({
+        //   to: 'hidden',
+        //   animated: false
+        // })
+      }, 1500)
+    } catch (error) {
+      console.log(error.toString());
+      AlertIOS.alert(
+        error.toString()
+      )
+    }
+  }
+
   render() {
     return (
       <View>
         <Login />
         <Register />
+        <Button title="Logout" onPress={this.logout} />
       </View>
     )
   }
