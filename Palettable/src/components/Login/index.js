@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, TextInput, AlertIOS } from 'react-native';
+import { Text, View, Button, TextInput, AlertIOS, StyleSheet } from 'react-native';
 import firebase from 'firebase';
 
 class Login extends Component {
@@ -35,8 +35,8 @@ class Login extends Component {
 
   render() {
     return (
-      <View>
-        <Text>Login</Text>
+      <View style={styles.container}>
+        <Text style={styles.header}>Login</Text>
         <TextInput
           label="Email Address"
           autoCorrect={false}
@@ -54,10 +54,17 @@ class Login extends Component {
           value={this.state.password}
           onChangeText={password => this.setState({ password })}
         />
-        <Button title="Login" onPress={this.login} />
+        <Button title="LOGIN" onPress={this.login} />
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    margin: 20
+  }
+})
 
 export default Login;

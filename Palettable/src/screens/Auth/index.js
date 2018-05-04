@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, Button, AlertIOS } from 'react-native';
+import { Text, View, TextInput, Button, AlertIOS, StyleSheet, TouchableHighlight } from 'react-native';
 import Login from '../../components/Login';
 import Register from '../../components/Register';
 import firebase from 'firebase';
@@ -46,13 +46,37 @@ class AuthScreen extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <Login />
         <Register />
-        <Button title="Logout" onPress={this.logout} />
+        <View>
+          <Button title="LOGOUT" onPress={this.logout} />
+        </View>
+        {/* <TouchableHighlight style={styles.button} onPress={this.logout}>
+          <Text>LOGOUT</Text>
+        </TouchableHighlight> */}
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  // button: {
+  //   flex: 1,
+  //   justifyContent: 'center',
+  //   alignItems: 'center',
+  //   backgroundColor: 'rgba(92, 99,216, 1)',
+  //   width: 300,
+  //   height: 45,
+  //   borderColor: 'transparent',
+  //   borderWidth: 0,
+  //   borderRadius: 5
+  // }
+})
 
 export default AuthScreen;
