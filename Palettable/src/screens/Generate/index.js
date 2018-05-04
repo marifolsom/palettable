@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Palette from '../../components/Palette';
-import Camera from 'react-native-camera';
+// import Camera from 'react-native-camera';
 import Clarifai from 'clarifai';
 import RNFetchBlob from 'react-native-fetch-blob';
-
 import ImagePicker from 'react-native-image-picker';
 
 // Initialize with Clarifai api key
@@ -17,25 +16,26 @@ class GenerateScreen extends Component {
     super(props);
     this.state = {
       photoInfo: null,
+      paletteId: null,
       palette: []
     }
     this.generatePalette = this.generatePalette.bind(this);
-    this.takePicture = this.takePicture.bind(this);
+    // this.takePicture = this.takePicture.bind(this);
     this.imagePicker = this.imagePicker.bind(this);
   }
 
-  // Make a function that prompts the user to take a photo, and stores that selected photo in the photoInfo state
-  async takePicture() {
-    if (this.camera) {
-      const data = await this.camera.capture();
-      // console.log(data);
-      // Image source needs an object with a uri property
-      const photoInfo = { uri: data.path };
-      this.setState({
-        photoInfo: photoInfo
-      })
-    }
-  }
+  // // Make a function that prompts the user to take a photo, and stores that selected photo in the photoInfo state
+  // async takePicture() {
+  //   if (this.camera) {
+  //     const data = await this.camera.capture();
+  //     // console.log(data);
+  //     // Image source needs an object with a uri property
+  //     const photoInfo = { uri: data.path };
+  //     this.setState({
+  //       photoInfo: photoInfo
+  //     })
+  //   }
+  // }
 
   // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the photoInfo state
   imagePicker() {
@@ -88,7 +88,9 @@ class GenerateScreen extends Component {
               hexValueArray.push(hexValue);
             }
           })
+          console.log(response.outputs[0].id);
           this.setState({
+            paletteId: response.outputs[0].id,
             palette: hexValueArray
           })
         })
@@ -103,7 +105,7 @@ class GenerateScreen extends Component {
       <View style={styles.container}>
         {/* If there is a generated palette, display the palette component with the passed hexValueArray */}
         {this.state.palette.length > 0 ? (
-          <Palette hexValueArray={this.state.palette} />
+          <Palette hexValueArray={this.state.palette} paletteId={this.state.paletteId} />
         ) : (
           <View>
             {/* If no photo has been taken, display the camera */}
@@ -124,7 +126,6 @@ class GenerateScreen extends Component {
               //     <Button title="Take Photo" onPress={this.takePicture} />
               //   </View>
               // </View>
-
               <TouchableOpacity onPress={this.imagePicker} style={styles.container}>
                 <Text>Upload or take a photo!</Text>
               </TouchableOpacity>
