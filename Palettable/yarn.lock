@@ -4229,19 +4229,11 @@ react-native-fetch-blob@^0.10.8:
     base-64 "0.1.0"
     glob "7.0.6"
 
-react-native-image-picker@^0.26.7:
-  version "0.26.7"
-  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.26.7.tgz#ad2ee957f7f6cc01396893ea03d84cb2adb2e376"
-
 react-native-navigation@^1.1.452:
   version "1.1.452"
   resolved "https://registry.yarnpkg.com/react-native-navigation/-/react-native-navigation-1.1.452.tgz#e0d29d2346f7e589a1511c94ac4a63aaf7103bbe"
   dependencies:
     lodash "4.x.x"
-
-react-native-palette@^0.3.2:
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/react-native-palette/-/react-native-palette-0.3.2.tgz#56579d222618678f4b650100e2d7796560480da5"
 
 react-native@0.55.3:
   version "0.55.3"

@@ -5,6 +5,7 @@ import Camera from 'react-native-camera';
 import Clarifai from 'clarifai';
 import RNFetchBlob from 'react-native-fetch-blob';
 
+// Initialize with Clarifai api key
 const app = new Clarifai.App({
  apiKey: 'aec16f562f384712b9cd7dcec8071cb3'
 })
@@ -86,7 +87,7 @@ class GenerateScreen extends Component {
                   permissionDialogMessage={"We need permission to use the camera on your phone"}
                 />
                 <View>
-                  <Button title="Take Photo!" onPress={this.takePicture.bind(this)} />
+                  <Button title="Take Photo" onPress={this.takePicture.bind(this)} />
                 </View>
               </View>
             ) : (
@@ -95,7 +96,7 @@ class GenerateScreen extends Component {
                 <Image source={this.state.photoInfo} style={styles.container} />
                 <View style={styles.buttons}>
                   {/* <Button title="Retake" onPress={this.takePicture.bind(this)} /> */}
-                  <Button title="Generate!" onPress={this.generatePalette} />
+                  <Button title="Generate Palette!" onPress={this.generatePalette} />
                 </View>
               </View>
             )}

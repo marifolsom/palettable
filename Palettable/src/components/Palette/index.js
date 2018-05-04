@@ -77,7 +77,8 @@ class Palette extends Component {
     } else {
       // If the palette is coming from the 'Discover' screen, map over array of rgb values, convert to hex, and create a color component with each hex value passed as a prop
       // // COLORlovers API
-      colors = this.state.palette.map(color => {
+      colors = this.state.palette.map((color, index) => {
+        console.log(color, index);
         return <Color key={color} hexValue={color} />;
       })
       // // Colormind API
