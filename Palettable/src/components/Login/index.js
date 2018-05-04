@@ -10,9 +10,25 @@ class Login extends Component {
     }
   }
 
-  // inputHandler(evt) {
-  //   console.log(evt.target.value);
-  // }
+  async login(email, password) {
+    try {
+      await firebase.auth()
+        .signInWithEmailAndPassword(email, password);
+      console.log('Logged In!');
+      // Navigate to the Home page
+    } catch (error) {
+      console.log(error.toString())
+    }
+  }
+
+  async logout() {
+    try {
+      await firebase.auth().signOut();
+      // Navigate to login view
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   render() {
     console.log(this.state);

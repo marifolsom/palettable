@@ -7,25 +7,20 @@ class Register extends Component {
     super(props);
     this.state = {
       email: '',
-      password: '',
-      passwordConfirm: ''
+      password: ''
     }
   }
 
-  async signup(email, pass) {
+  async signup(email, password) {
     try {
       await firebase.auth()
-        .createUserWithEmailAndPassword(email, pass);
-      console.log("Account created");
+        .createUserWithEmailAndPassword(email, password);
+      console.log('Account created');
       // Navigate to the Home page, the user is auto logged in
     } catch (error) {
       console.log(error.toString())
     }
   }
-
-  // inputHandler(evt) {
-  //   console.log(evt.target.value);
-  // }
 
   render() {
     return (
@@ -44,14 +39,7 @@ class Register extends Component {
             value={this.state.password}
             onChangeText={password => this.setState({ password })}
           />
-          <TextInput
-            label="Confirm Password"
-            autoCorrect={false}
-            placeholder="*******"
-            value={this.state.passwordConfirm}
-            onChangeText={passwordConfirm => this.setState({ passwordConfirm })}
-          />
-          {/* <Button title="Log in" /> */}
+          {/* <Button title="Register" /> */}
       </View>
     )
   }
