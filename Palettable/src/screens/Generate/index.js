@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity, Platform } from 'react-native';
-import { getAllSwatches } from 'react-native-palette';
-import rgbToHex from 'rgb-hex';
+import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Palette from '../../components/Palette';
 import Camera from 'react-native-camera';
+import Clarifai from 'clarifai';
+import RNFetchBlob from 'react-native-fetch-blob';
+
+const app = new Clarifai.App({
+ apiKey: 'aec16f562f384712b9cd7dcec8071cb3'
+})
 
 class GenerateScreen extends Component {
   constructor(props) {
@@ -19,48 +23,44 @@ class GenerateScreen extends Component {
   takePicture = async function() {
     if (this.camera) {
       const data = await this.camera.capture();
-      console.log(data);
-      // Image source needs an object with a uri property that looks like this:
-      //file:///var/mobile/Containers/Data/Application/2B0E8125-46C4-4847-A901-E6156E504D1A/Documents/264AA307-F35D-4102-B5F2-ED38329643E1.jpg
-      // Still playing around with the URI and getting the taken photo to show
-      pathHTTPS = `https://${data.path}`;
-      const path = { uri: pathHTTPS, path: data.path };
+      // console.log(data);
+      // Image source needs an object with a uri property
+      const photoInfo = { uri: data.path };
       this.setState({
-        photoInfo: path
+        photoInfo: photoInfo
       })
     }
   }
 
-  // Make a function that takes the photoInfo, extracts the prominent colors, and updates the state with the photo's palette
+  // Make a function that takes the photoInfo URI, extracts the prominent colors, and updates the state with the photo's palette
   generatePalette() {
-    console.log(this.state);
-    // react-native-palette requires a path that looks like this:
-    // assets-library://asset/asset.HEIC?id=FFA54FF0-392F-432B-B408-3926AFD64DCA&ext=HEIC
-    const path = this.state.photoInfo.path;
-    console.log(path);
-    getAllSwatches({ quality: 'medium' }, path, (error, swatches) => {
-      if (error) {
-        console.log(error);
-      } else {
-        hexValueArray = [];
-        swatches.sort((a, b) => {
-          return b.population - a.population;
+    // Covert URI to base64 before putting into Clarifai
+    RNFetchBlob.fs.readFile(this.state.photoInfo.uri, 'base64')
+      .then((photoData) => {
+        // React Native doesn't have a process.nextTick, so polyfill it with setImmediate
+        process.nextTick = setImmediate;
+        // Make a call to the Clarifai Predict API's Color Model
+        app.models.predict('eeed0b6733a644cea07cf4c60f87ebb7', { base64: photoData })
+        .then((response) => {
+          console.log('Clarifai Response:', response);
+          let hexValueArray = [];
+          // Go through each color that's extracted
+          response.outputs[0].data.colors.forEach(color => {
+            // Remove hashtag for formatting
+            const hexValue = color.raw_hex.substr(1);
+            // Limit length of array
+            if (hexValueArray.length < 5) {
+              hexValueArray.push(hexValue);
+            }
+          })
+          this.setState({
+            palette: hexValueArray
+          })
         })
-        swatches.forEach(swatch => {
-          // A little hacky, may be a better way to do this?
-          // console.log(swatch.color); // looks like: rgba(216, 194, 173, 1)
-          rgbaArray = swatch.color.split(/[(), ]/);
-          // console.log(rgbaArray); // looks like: ["rgba", "121", "", "121", "", "138", "", "1", ""]
-          const hexValue = rgbToHex(Number(rgbaArray[1]), Number(rgbaArray[3]), Number(rgbaArray[5]));
-          if (hexValueArray.length < 5) {
-            hexValueArray.push(hexValue);
-          }
-        })
-        this.setState({
-          palette: hexValueArray
-        })
-      }
-    })
+      })
+      .catch((error) => {
+        console.log('Error:', error.message);
+      })
   }
 
   render() {
@@ -80,11 +80,13 @@ class GenerateScreen extends Component {
                   type={Camera.constants.Type.back}
                   style={styles.container}
                   flashMode={Camera.constants.FlashMode.off}
+                  captureTarget={Camera.constants.CaptureTarget.disk}
+                  //captureTarget={Camera.constants.CaptureTarget.memory}
                   permissionDialogTitle={"Permission to use camera"}
                   permissionDialogMessage={"We need permission to use the camera on your phone"}
                 />
                 <View>
-                  <Button title="Take the picture!" onPress={this.takePicture.bind(this)} />
+                  <Button title="Take Photo!" onPress={this.takePicture.bind(this)} />
                 </View>
               </View>
             ) : (
@@ -92,7 +94,7 @@ class GenerateScreen extends Component {
               <View style={styles.container}>
                 <Image source={this.state.photoInfo} style={styles.container} />
                 <View style={styles.buttons}>
-                  {/* <Button title="Retake" onPress={this.imagePickerHandler} /> */}
+                  {/* <Button title="Retake" onPress={this.takePicture.bind(this)} /> */}
                   <Button title="Generate!" onPress={this.generatePalette} />
                 </View>
               </View>

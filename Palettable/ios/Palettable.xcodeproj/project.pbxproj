@@ -44,6 +44,7 @@
 		DD0077D22098AF6100CFB91E /* libRNImagePicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF1AC2F2098AB52005869C4 /* libRNImagePicker.a */; };
 		DD0077D92098F8FA00CFB91E /* libRNPalette.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0077D82098F8E800CFB91E /* libRNPalette.a */; };
 		DD0077E0209B7FD300CFB91E /* libRNCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0077DF209B7FC700CFB91E /* libRNCamera.a */; };
+		DD0077E7209C007100CFB91E /* libRNFetchBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DD0077E6209C006300CFB91E /* libRNFetchBlob.a */; };
 		DDF1ABE820976626005869C4 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DDF1ABE6209765F9005869C4 /* libReactNativeNavigation.a */; };
 		F7411643534D42399414DAA0 /* Quicksand-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9AA83B32E174B8A8C8F14E3 /* Quicksand-Regular.ttf */; };
 /* End PBXBuildFile section */
@@ -336,6 +337,13 @@
 			remoteGlobalIDString = 4107012F1ACB723B00C6AA39;
 			remoteInfo = RNCamera;
 		};
+		DD0077E5209C006300CFB91E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = DD0077E1209C006200CFB91E /* RNFetchBlob.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A15C300E1CD25C330074CB35;
+			remoteInfo = RNFetchBlob;
+		};
 		DDF1ABE5209765F9005869C4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = DDF1ABBC209765F9005869C4 /* ReactNativeNavigation.xcodeproj */;
@@ -383,6 +391,7 @@
 		ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTBlob.xcodeproj; path = "../node_modules/react-native/Libraries/Blob/RCTBlob.xcodeproj"; sourceTree = "<group>"; };
 		DD0077D32098F8E700CFB91E /* RNPalette.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNPalette.xcodeproj; path = "../node_modules/react-native-palette/ios/RNPalette.xcodeproj"; sourceTree = "<group>"; };
 		DD0077DA209B7FC600CFB91E /* RNCamera.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNCamera.xcodeproj; path = "../node_modules/react-native-camera/ios/RNCamera.xcodeproj"; sourceTree = "<group>"; };
+		DD0077E1209C006200CFB91E /* RNFetchBlob.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNFetchBlob.xcodeproj; path = "../node_modules/react-native-fetch-blob/ios/RNFetchBlob.xcodeproj"; sourceTree = "<group>"; };
 		DDF1ABBC209765F9005869C4 /* ReactNativeNavigation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeNavigation.xcodeproj; path = "../node_modules/react-native-navigation/ios/ReactNativeNavigation.xcodeproj"; sourceTree = "<group>"; };
 		E9AA83B32E174B8A8C8F14E3 /* Quicksand-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Regular.ttf"; path = "../assets/fonts/Quicksand-Regular.ttf"; sourceTree = "<group>"; };
 		F855352D24F947B1AFD4F4DF /* Quicksand-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Quicksand-Bold.ttf"; path = "../assets/fonts/Quicksand-Bold.ttf"; sourceTree = "<group>"; };
@@ -404,6 +413,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DD0077E7209C007100CFB91E /* libRNFetchBlob.a in Frameworks */,
 				DD0077E0209B7FD300CFB91E /* libRNCamera.a in Frameworks */,
 				DD0077D92098F8FA00CFB91E /* libRNPalette.a in Frameworks */,
 				DD0077D22098AF6100CFB91E /* libRNImagePicker.a in Frameworks */,
@@ -606,6 +616,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				DD0077E1209C006200CFB91E /* RNFetchBlob.xcodeproj */,
 				DD0077DA209B7FC600CFB91E /* RNCamera.xcodeproj */,
 				DD0077D32098F8E700CFB91E /* RNPalette.xcodeproj */,
 				DDF1ABBC209765F9005869C4 /* ReactNativeNavigation.xcodeproj */,
@@ -683,6 +694,14 @@
 			isa = PBXGroup;
 			children = (
 				DD0077DF209B7FC700CFB91E /* libRNCamera.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DD0077E2209C006200CFB91E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DD0077E6209C006300CFB91E /* libRNFetchBlob.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -881,6 +900,10 @@
 				{
 					ProductGroup = DD0077DB209B7FC600CFB91E /* Products */;
 					ProjectRef = DD0077DA209B7FC600CFB91E /* RNCamera.xcodeproj */;
+				},
+				{
+					ProductGroup = DD0077E2209C006200CFB91E /* Products */;
+					ProjectRef = DD0077E1209C006200CFB91E /* RNFetchBlob.xcodeproj */;
 				},
 				{
 					ProductGroup = DDF1AC2B2098AB51005869C4 /* Products */;
@@ -1173,6 +1196,13 @@
 			fileType = archive.ar;
 			path = libRNCamera.a;
 			remoteRef = DD0077DE209B7FC700CFB91E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		DD0077E6209C006300CFB91E /* libRNFetchBlob.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNFetchBlob.a;
+			remoteRef = DD0077E5209C006300CFB91E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		DDF1ABE6209765F9005869C4 /* libReactNativeNavigation.a */ = {
