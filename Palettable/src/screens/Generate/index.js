@@ -5,6 +5,8 @@ import Camera from 'react-native-camera';
 import Clarifai from 'clarifai';
 import RNFetchBlob from 'react-native-fetch-blob';
 
+import ImagePicker from 'react-native-image-picker';
+
 // Initialize with Clarifai api key
 const app = new Clarifai.App({
  apiKey: 'aec16f562f384712b9cd7dcec8071cb3'
@@ -18,7 +20,8 @@ class GenerateScreen extends Component {
       palette: []
     }
     this.generatePalette = this.generatePalette.bind(this);
-    this.takePicture = this.takePicture.bind(this)
+    this.takePicture = this.takePicture.bind(this);
+    this.imagePicker = this.imagePicker.bind(this);
   }
 
   // Make a function that prompts the user to take a photo, and stores that selected photo in the photoInfo state
@@ -34,10 +37,40 @@ class GenerateScreen extends Component {
     }
   }
 
+  // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the photoInfo state
+  imagePicker() {
+    // Set options
+    const options = {
+      quality: 1.0,
+      maxWidth: 500,
+      maxHeight: 500,
+      storageOptions: {
+        skipBackup: true
+      }
+    }
+    // Display the image picker menu, and log the response based on the user's actions
+    ImagePicker.showImagePicker(options, response => {
+      console.log('Image Picker Response:', response);
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        // Update the state
+        this.setState({
+          photoInfo: response
+        })
+      }
+    })
+  }
+
   // Make a function that takes the photoInfo URI, extracts the prominent colors, and updates the state with the photo's palette
   generatePalette() {
+    // If using react-native-image-picker trim off the 'file://'
+    const uri = this.state.photoInfo.uri.substr(7);
+    console.log(uri);
     // Covert URI to base64 before putting into Clarifai
-    RNFetchBlob.fs.readFile(this.state.photoInfo.uri, 'base64')
+    RNFetchBlob.fs.readFile(uri, 'base64')
       .then((photoData) => {
         // React Native doesn't have a process.nextTick, so polyfill it with setImmediate
         process.nextTick = setImmediate;
@@ -75,22 +108,26 @@ class GenerateScreen extends Component {
           <View>
             {/* If no photo has been taken, display the camera */}
             {this.state.photoInfo === null ? (
-              <View>
-                <Camera
-                  ref={cam => (this.camera = cam)}
-                  aspect={Camera.constants.Aspect.fill}
-                  type={Camera.constants.Type.back}
-                  style={styles.container}
-                  flashMode={Camera.constants.FlashMode.off}
-                  captureTarget={Camera.constants.CaptureTarget.disk}
-                  //captureTarget={Camera.constants.CaptureTarget.memory}
-                  permissionDialogTitle={"Permission to use camera"}
-                  permissionDialogMessage={"We need permission to use the camera on your phone"}
-                />
-                <View>
-                  <Button title="Take Photo" onPress={this.takePicture} />
-                </View>
-              </View>
+              // <View>
+              //   <Camera
+              //     ref={cam => (this.camera = cam)}
+              //     aspect={Camera.constants.Aspect.fill}
+              //     type={Camera.constants.Type.back}
+              //     style={styles.container}
+              //     flashMode={Camera.constants.FlashMode.off}
+              //     captureTarget={Camera.constants.CaptureTarget.disk}
+              //     //captureTarget={Camera.constants.CaptureTarget.memory}
+              //     permissionDialogTitle={"Permission to use camera"}
+              //     permissionDialogMessage={"We need permission to use the camera on your phone"}
+              //   />
+              //   <View>
+              //     <Button title="Take Photo" onPress={this.takePicture} />
+              //   </View>
+              // </View>
+
+              <TouchableOpacity onPress={this.imagePicker} style={styles.container}>
+                <Text>Upload or take a photo!</Text>
+              </TouchableOpacity>
             ) : (
               // Otherwise display the taken image along with 'Generate!' and 'Retake' buttons
               <View style={styles.container}>
