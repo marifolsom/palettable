@@ -4,7 +4,7 @@ import MainMenuScreen from './src/screens/MainMenu';
 import DiscoverScreen from './src/screens/Discover';
 import GenerateScreen from './src/screens/Generate';
 import FavoritesScreen from './src/screens/Favorites';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 // Initialize Firebase
 var config = {
@@ -33,4 +33,4 @@ Navigation.startSingleScreenApp({
 })
 
 // Ignore warnings about remote debugger and tab switching
-console.ignoredYellowBox = ['Remote debugger', 'Possible Unhandled Promise Rejection (id: 0)'];
+console.ignoredYellowBox = ['Remote debugger', 'Possible Unhandled Promise Rejection (id: 0)', 'Possible Unhandled Promise Rejection (id: 1)'];

@@ -1,19 +1,19 @@
 import React, { Component } from 'react';
 import { Text, View, Button, TouchableHighlight, StyleSheet, AlertIOS } from 'react-native';
-import Color from '../Color';
-import firebase from 'firebase';
+import FavoritedColor from '../FavoritedColor';
+import * as firebase from 'firebase';
 
 class FavoritedPalette extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      palette: this.props.palette,
-      favorited: false
+      palette: this.props.palette
     }
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
   async deleteFavorite() {
+    console.log('You unfavorited a palette with containing these colors:', this.state.palette);
     // Get the current user
     console.log(await firebase.auth().currentUser);
     const currentUser = await firebase.auth().currentUser;
@@ -23,22 +23,30 @@ class FavoritedPalette extends Component {
   }
 
   render() {
-    const colors = this.state.palette.map(color => {
-      return <Color key={color} hexValue={color} />;
+    const colors = this.state.palette.map((color, index) => {
+      // console.log('a color:', color);
+      return <FavoritedColor key={index} hexValue={color} />;
     })
 
     return (
       <View>
         <View style={styles.buttons}>
-          <Button title="♥️" onPress={this.addFavorite} />
           <Button title="🗑" onPress={this.deleteFavorite} />
         </View>
         <View>
-          {/* {colors} */}
+          {colors}
         </View>
       </View>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  buttons: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-end'
+  }
+})
 
 export default FavoritedPalette;

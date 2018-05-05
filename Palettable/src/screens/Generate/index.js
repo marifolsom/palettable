@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import Palette from '../../components/Palette';
-// import Camera from 'react-native-camera';
 import Clarifai from 'clarifai';
 import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from 'react-native-image-picker';
@@ -19,22 +18,19 @@ class GenerateScreen extends Component {
       palette: []
     }
     this.generatePalette = this.generatePalette.bind(this);
-    // this.takePicture = this.takePicture.bind(this);
     this.imagePicker = this.imagePicker.bind(this);
+    this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
-  // // Make a function that prompts the user to take a photo, and stores that selected photo in the photoInfo state
-  // async takePicture() {
-  //   if (this.camera) {
-  //     const data = await this.camera.capture();
-  //     // console.log(data);
-  //     // Image source needs an object with a uri property
-  //     const photoInfo = { uri: data.path };
-  //     this.setState({
-  //       photoInfo: photoInfo
-  //     })
-  //   }
-  // }
+  onNavigatorEvent(event) {
+    if (event.id === 'bottomTabSelected') {
+      console.log('Tab selected!');
+      this.imagePicker();
+    }
+    if (event.id === 'bottomTabReselected') {
+      console.log('Tab reselected!');
+    }
+  }
 
   // Make a function that prompts the user to take or upload a photo, and stores that selected photo in the photoInfo state
   imagePicker() {
@@ -106,37 +102,13 @@ class GenerateScreen extends Component {
           <Palette hexValueArray={this.state.palette} />
         ) : (
           <View>
-            {/* If no photo has been taken, display the camera */}
-            {this.state.photoInfo === null ? (
-              // <View>
-              //   <Camera
-              //     ref={cam => (this.camera = cam)}
-              //     aspect={Camera.constants.Aspect.fill}
-              //     type={Camera.constants.Type.back}
-              //     style={styles.container}
-              //     flashMode={Camera.constants.FlashMode.off}
-              //     captureTarget={Camera.constants.CaptureTarget.disk}
-              //     //captureTarget={Camera.constants.CaptureTarget.memory}
-              //     permissionDialogTitle={"Permission to use camera"}
-              //     permissionDialogMessage={"We need permission to use the camera on your phone"}
-              //   />
-              //   <View>
-              //     <Button title="Take Photo" onPress={this.takePicture} />
-              //   </View>
-              // </View>
-              <TouchableOpacity onPress={this.imagePicker} style={styles.container}>
-                <Text>Upload or take a photo!</Text>
-              </TouchableOpacity>
-            ) : (
-              // Otherwise display the taken image along with 'Generate!' and 'Retake' buttons
-              <View style={styles.container}>
-                <Image source={this.state.photoInfo} style={styles.container} />
-                <View style={styles.buttons}>
-                  {/* <Button title="Retake" onPress={this.takePicture} /> */}
-                  <Button title="Generate Palette!" onPress={this.generatePalette} />
-                </View>
+            {/* Otherwise display the taken image along with 'Generate!' and 'Retake' buttons */}
+            <View style={styles.container}>
+              <Image source={this.state.photoInfo} style={styles.container} />
+              <View style={styles.buttons}>
+                <Button title="Generate Palette!" onPress={this.generatePalette} />
               </View>
-            )}
+            </View>
           </View>
         )}
       </View>

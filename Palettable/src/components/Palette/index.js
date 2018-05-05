@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Text, View, Button, TouchableHighlight, StyleSheet, AlertIOS } from 'react-native';
 import Color from '../Color';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 
 class Palette extends Component {
   constructor(props) {
     super(props);
     this.state = {
       palette: [],
-      favorited: false
+      paletteName: ''
     }
     this.fetchRandomPalette = this.fetchRandomPalette.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
@@ -31,8 +31,10 @@ class Palette extends Component {
           fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
             .then(apiResponse => apiResponse.json())
             .then(paletteInfo => {
+              console.log(paletteInfo[0].title);
               this.setState({
-                palette: paletteInfo[0].colors
+                palette: paletteInfo[0].colors,
+                paletteName: paletteInfo[0].title
               })
             })
         } else {
@@ -55,13 +57,16 @@ class Palette extends Component {
       )
     }
     // Get the current user
-    console.log(await firebase.auth().currentUser);
+    console.log('current user:', await firebase.auth().currentUser);
     const currentUser = await firebase.auth().currentUser;
     // Get a unique key
     const databaseRef = await firebase.database().ref(currentUser.uid).child('favorites').push();
     // If the palette is coming from the 'Generate' screen, save palette that's stored in props
     if (this.props.hexValueArray !== undefined) {
       console.log(`You favorited a palette with the colors ${this.props.hexValueArray}!`);
+      AlertIOS.alert(
+        'You added a palette to your favorites'
+      )
       // Update the palette at that unique key
       databaseRef.set({
         palette: this.props.hexValueArray
@@ -69,6 +74,9 @@ class Palette extends Component {
     // If the palette is coming from the 'Discover' screen, save palette that's stored in state
     } else {
       console.log(`You favorited a palette with the colors ${this.state.palette}!`);
+      AlertIOS.alert(
+        'You added a palette to your favorites'
+      )
       // Update the palette at that unique key
       databaseRef.set({
         palette: this.state.palette
@@ -94,7 +102,6 @@ class Palette extends Component {
       <View>
         <View style={styles.buttons}>
           <Button title="♥️" onPress={this.addFavorite} />
-          <Button title="🗑" onPress={this.deleteFavorite} />
         </View>
         {/* If the palette is coming from the 'Generate' screen, render the colors without a TouchableHighlight */}
         {this.props.hexValueArray !== undefined ? (

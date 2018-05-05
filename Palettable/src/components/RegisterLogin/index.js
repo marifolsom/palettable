@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, AlertIOS, StyleSheet } from 'react-native';
-import firebase from 'firebase';
+import * as firebase from 'firebase';
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 
 class RegisterLogin extends Component {
