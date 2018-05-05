@@ -16,7 +16,6 @@ class GenerateScreen extends Component {
     super(props);
     this.state = {
       photoInfo: null,
-      paletteId: null,
       palette: []
     }
     this.generatePalette = this.generatePalette.bind(this);
@@ -90,7 +89,6 @@ class GenerateScreen extends Component {
           })
           console.log(response.outputs[0].id);
           this.setState({
-            paletteId: response.outputs[0].id,
             palette: hexValueArray
           })
         })
@@ -105,7 +103,7 @@ class GenerateScreen extends Component {
       <View style={styles.container}>
         {/* If there is a generated palette, display the palette component with the passed hexValueArray */}
         {this.state.palette.length > 0 ? (
-          <Palette hexValueArray={this.state.palette} paletteId={this.state.paletteId} />
+          <Palette hexValueArray={this.state.palette} />
         ) : (
           <View>
             {/* If no photo has been taken, display the camera */}

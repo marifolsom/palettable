@@ -6,13 +6,12 @@ class Palette extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      paletteId: null,
       palette: [],
       favorited: false
     }
     this.fetchRandomPalette = this.fetchRandomPalette.bind(this);
-    // this.addFavorite = this.addFavorite.bind(this);
-    // this.deleteFavorite = this.deleteFavorite.bind(this);
+    this.addFavorite = this.addFavorite.bind(this);
+    this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -25,7 +24,6 @@ class Palette extends Component {
     fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
       .then(apiResponse => apiResponse.json())
       .then(paletteInfo => {
-        console.log(paletteInfo[0].id);
         // If the palette length is not 5, fetch again
         // Probably a better way to do this?
         if (paletteInfo[0].colors.length !== 5) {
@@ -34,13 +32,11 @@ class Palette extends Component {
             .then(apiResponse => apiResponse.json())
             .then(paletteInfo => {
               this.setState({
-                paletteId: paletteInfo[0].id,
                 palette: paletteInfo[0].colors
               })
             })
         } else {
           this.setState({
-            paletteId: paletteInfo[0].id,
             palette: paletteInfo[0].colors
           })
         }
@@ -50,13 +46,12 @@ class Palette extends Component {
       })
   }
 
-  addFavorite(paletteId) {
-    console.log(`You favorited ${paletteId} palette!`);
-    // Single palette API endpoint: `http://www.colourlovers.com/api/palette/${paletteId}?format=json`
+  addFavorite() {
+    console.log(`You favorited a palette with the colors ${this.state.palette}!`);
   }
 
-  deleteFavorite(paletteId) {
-    console.log(`You unfavorited ${paletteId} palette!`);
+  deleteFavorite() {
+    console.log(`You unfavorited a palette with the colors ${this.state.palette}!`);
   }
 
   render() {
@@ -77,8 +72,8 @@ class Palette extends Component {
     return (
       <View>
         <View style={styles.buttons}>
-          <Button title="♥️" onPress={this.addFavorite.bind(this, this.state.paletteId)} />
-          <Button title="🗑" onPress={this.deleteFavorite.bind(this, this.state.paletteId)} />
+          <Button title="♥️" onPress={this.addFavorite} />
+          <Button title="🗑" onPress={this.deleteFavorite} />
         </View>
         {/* If the palette is coming from the 'Generate' screen, render the colors without a TouchableHighlight */}
         {this.props.hexValueArray !== undefined ? (
