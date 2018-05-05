@@ -47,14 +47,11 @@ class AuthScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Login />
+        {/* <Login /> */}
         <Register />
         <View>
           <Button title="LOGOUT" onPress={this.logout} />
         </View>
-        {/* <TouchableHighlight style={styles.button} onPress={this.logout}>
-          <Text>LOGOUT</Text>
-        </TouchableHighlight> */}
       </View>
     )
   }

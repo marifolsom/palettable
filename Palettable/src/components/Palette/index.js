@@ -47,11 +47,19 @@ class Palette extends Component {
   }
 
   addFavorite() {
-    console.log(`You favorited a palette with the colors ${this.state.palette}!`);
+    if (this.props.hexValueArray !== undefined) {
+      console.log(`You favorited a palette with the colors ${this.props.hexValueArray}!`);
+    } else {
+      console.log(`You favorited a palette with the colors ${this.state.palette}!`);
+    }
   }
 
   deleteFavorite() {
-    console.log(`You unfavorited a palette with the colors ${this.state.palette}!`);
+    if (this.props.hexValueArray !== undefined) {
+      console.log(`You unfavorited a palette with the colors ${this.props.hexValueArray}!`);
+    } else {
+      console.log(`You unfavorited a palette with the colors ${this.state.palette}!`);
+    }
   }
 
   render() {
