@@ -33,8 +33,7 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 45,
     fontFamily: Fonts.QuicksandMedium,
-    color: '#000000',
-    // opacity: 0.85
+    color: '#000000'
   },
   imageContainer: {
     height: 100,

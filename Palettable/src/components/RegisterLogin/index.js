@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, TextInput, Button, AlertIOS, StyleSheet } from 'react-native';
+import { Text, View, AlertIOS, StyleSheet } from 'react-native';
 import firebase from 'firebase';
-import { Container, Header, Content, Form, Item, Input, Label } from 'native-base';
+import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 
 class RegisterLogin extends Component {
   constructor(props) {
@@ -12,6 +12,7 @@ class RegisterLogin extends Component {
     }
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
+    this.logout = this.logout.bind(this);
   }
 
   async register() {
@@ -21,18 +22,18 @@ class RegisterLogin extends Component {
         .createUserWithEmailAndPassword(this.state.email, this.state.password);
       console.log('Account created');
       // Navigate to the 'Discover' tab, the user is logged in
-      setTimeout(() => {
-        this.props.navigator.switchToTab({
-          tabIndex: 0
-        })
-      }, 1500)
+      // setTimeout(() => {
+        // this.props.navigator.switchToTab({
+        //   tabIndex: 0
+        // })
+      // }, 1500)
     } catch (error) {
       console.log(error.toString());
       AlertIOS.alert(
         error.toString()
       )
     }
-    console.log('current user:', firebase.auth().currentUser);
+    console.log('current user:', await firebase.auth().currentUser);
   }
 
   async login() {
@@ -41,11 +42,34 @@ class RegisterLogin extends Component {
       await firebase.auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password);
       console.log('Logged In!');
-      // Navigate to the Home page
+      // Navigate to the 'Favorites' screen
+      // setTimeout(() => {
+        // this.props.navigator.switchToTab({
+        //   tabIndex: 2
+        // })
+      // }, 1500)
+    } catch (error) {
+      console.log(error.toString());
+      AlertIOS.alert(
+        error.toString()
+      )
+    }
+    console.log('current user:', await firebase.auth().currentUser);
+  }
+
+  async logout() {
+    try {
+      await firebase.auth().signOut();
+      console.log('Logged out');
+      // Navigate to Main Menu
       setTimeout(() => {
-        this.props.navigator.switchToTab({
-          tabIndex: 2
+        this.props.navigator.push({
+          screen: 'palettable.MainMenuScreen'
         })
+        // this.props.navigator.toggleNavBar({
+        //   to: 'hidden',
+        //   animated: false
+        // })
       }, 1500)
     } catch (error) {
       console.log(error.toString());
@@ -53,33 +77,44 @@ class RegisterLogin extends Component {
         error.toString()
       )
     }
-    console.log('current user:', firebase.auth().currentUser);
   }
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Register</Text>
-          <TextInput
-            label="Email Address"
-            autoCorrect={false}
-            autoCapitalize="none"
-            placeholder="you@domain.com"
-            value={this.state.email}
-            onChangeText={email => this.setState({ email })}
-          />
-          <TextInput
-            label="Password"
-            autoCorrect={false}
-            autoCapitalize="none"
-            secureTextEntry={true}
-            placeholder="*******"
-            value={this.state.password}
-            onChangeText={password => this.setState({ password })}
-          />
-          <Button title="REGISTER" onPress={this.register} />
-          <Button title="LOGIN" onPress={this.login} />
-      </View>
+      <Container style={styles.container}>
+        <Content>
+          <Form>
+            <Item floatingLabel>
+              <Label>Email</Label>
+              <Input
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={this.state.email}
+                onChangeText={email => this.setState({ email })}
+              />
+            </Item>
+            <Item floatingLabel>
+              <Label>Password</Label>
+              <Input
+                autoCorrect={false}
+                autoCapitalize="none"
+                secureTextEntry={true}
+                value={this.state.password}
+                onChangeText={password => this.setState({ password })}
+              />
+            </Item>
+            <Button block primary style={styles.button} onPress={this.login}>
+              <Text style={styles.buttonText}>LOGIN</Text>
+            </Button>
+            <Button block primary style={styles.button} onPress={this.register}>
+              <Text style={styles.buttonText}>REGISTER</Text>
+            </Button>
+            <Button block primary style={styles.button} onPress={this.logout}>
+              <Text style={styles.buttonText}>LOGOUT</Text>
+            </Button>
+          </Form>
+        </Content>
+      </Container>
     )
   }
 }
@@ -87,8 +122,18 @@ class RegisterLogin extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 20
+    padding: 15,
+    justifyContent: 'center'
   },
+  button: {
+    margin: 20,
+    marginBottom: 0
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#ffffff'
+  }
 })
 
 export default RegisterLogin;

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Button, TouchableHighlight, StyleSheet } from 'react-native';
+import { Text, View, Button, TouchableHighlight, StyleSheet, AlertIOS } from 'react-native';
 import Color from '../Color';
+import firebase from 'firebase';
 
 class Palette extends Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class Palette extends Component {
     }
     this.fetchRandomPalette = this.fetchRandomPalette.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
-    this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
   componentDidMount() {
@@ -46,19 +46,33 @@ class Palette extends Component {
       })
   }
 
-  addFavorite() {
+  async addFavorite() {
+    // If the user is not logged in alert them to log in or register
+    if (!firebase.auth().currentUser) {
+      console.log('Please log in or create an account to save to your favorites.');
+      AlertIOS.alert(
+        'Please log in or create an account to save to your favorites.'
+      )
+    }
+    // Get the current user
+    console.log(await firebase.auth().currentUser);
+    const currentUser = await firebase.auth().currentUser;
+    // Get a unique key
+    const databaseRef = await firebase.database().ref(currentUser.uid).child('favorites').push();
+    // If the palette is coming from the 'Generate' screen, save palette that's stored in props
     if (this.props.hexValueArray !== undefined) {
       console.log(`You favorited a palette with the colors ${this.props.hexValueArray}!`);
+      // Update the palette at that unique key
+      databaseRef.set({
+        palette: this.props.hexValueArray
+      })
+    // If the palette is coming from the 'Discover' screen, save palette that's stored in state
     } else {
       console.log(`You favorited a palette with the colors ${this.state.palette}!`);
-    }
-  }
-
-  deleteFavorite() {
-    if (this.props.hexValueArray !== undefined) {
-      console.log(`You unfavorited a palette with the colors ${this.props.hexValueArray}!`);
-    } else {
-      console.log(`You unfavorited a palette with the colors ${this.state.palette}!`);
+      // Update the palette at that unique key
+      databaseRef.set({
+        palette: this.state.palette
+      })
     }
   }
 
@@ -71,8 +85,7 @@ class Palette extends Component {
       })
     } else {
       // If the palette is coming from the 'Discover' screen, map over array of rgb values, convert to hex, and create a color component with each hex value passed as a prop
-      colors = this.state.palette.map((color, index) => {
-        // console.log(color, index);
+      colors = this.state.palette.map(color => {
         return <Color key={color} hexValue={color} />;
       })
     }

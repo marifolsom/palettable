@@ -1,10 +1,21 @@
 import { Navigation } from 'react-native-navigation';
-
 import AuthScreen from './src/screens/Auth';
 import MainMenuScreen from './src/screens/MainMenu';
 import DiscoverScreen from './src/screens/Discover';
 import GenerateScreen from './src/screens/Generate';
 import FavoritesScreen from './src/screens/Favorites';
+import firebase from 'firebase';
+
+// Initialize Firebase
+var config = {
+  apiKey: 'AIzaSyC21kE4EqLrpOrNUP_Xs5yasm4PVbrgOT0',
+  authDomain: 'palettable-app.firebaseapp.com',
+  databaseURL: 'https://palettable-app.firebaseio.com',
+  projectId: 'palettable-app',
+  storageBucket: 'palettable-app.appspot.com',
+  messagingSenderId: '456509266864'
+}
+firebase.initializeApp(config);
 
 // Register all of the app's screens
 // These registered screens can be accessed anywhere in the app
