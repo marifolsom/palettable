@@ -1,10 +1,10 @@
 import { Navigation } from 'react-native-navigation';
+import * as firebase from 'firebase';
 import AuthScreen from './src/screens/Auth';
 import MainMenuScreen from './src/screens/MainMenu';
 import DiscoverScreen from './src/screens/Discover';
 import GenerateScreen from './src/screens/Generate';
 import FavoritesScreen from './src/screens/Favorites';
-import * as firebase from 'firebase';
 
 // Initialize Firebase
 var config = {

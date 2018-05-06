@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, AlertIOS, StyleSheet, Image, Keyboard } from 'react-native';
+import { AlertIOS, Image, Keyboard, StyleSheet, Text, View } from 'react-native';
 import * as firebase from 'firebase';
-import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 import { Fonts } from '../../utils/Fonts';
+import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 
 class RegisterLogin extends Component {
   constructor(props) {
@@ -17,6 +17,7 @@ class RegisterLogin extends Component {
     this.tabHandler = this.tabHandler.bind(this);
   }
 
+  // Make a function that switches to a certain tabIndex after 1.5 seconds
   tabHandler(tabIndex) {
     setTimeout(() => {
       this.props.navigator.switchToTab({
@@ -25,6 +26,7 @@ class RegisterLogin extends Component {
     }, 1500)
   }
 
+  // Make a function that registers a new user, dismisses the keyboard, and redirects the user to the 'Favorites' screen
   async register() {
     console.log('Register:', this.state.email, this.state.password);
     try {
@@ -36,7 +38,6 @@ class RegisterLogin extends Component {
         [
           {
             text: 'OK',
-            // Navigate to the 'Favorites' screen, the user is logged in on press of OK
             onPress: this.tabHandler(2)
           }
         ]
@@ -48,6 +49,7 @@ class RegisterLogin extends Component {
     Keyboard.dismiss();
   }
 
+  // Make a function that logs a user in, dismisses the keyboard, and redirects the user to the 'Favorites' screen
   async login() {
     console.log('Login:', this.state.email, this.state.password);
     try {
@@ -59,7 +61,6 @@ class RegisterLogin extends Component {
         [
           {
             text: 'OK',
-            // Navigate to the 'Favorites' screen on press of OK
             onPress: this.tabHandler(2)
           }
         ]
@@ -71,8 +72,8 @@ class RegisterLogin extends Component {
     Keyboard.dismiss();
   }
 
+  // Make a function that logs a user out if they're logged in, and redirects the user to the 'Discover' screen
   async logout() {
-    // If the user is logged in, log them out
     if (firebase.auth().currentUser) {
       try {
         await firebase.auth().signOut();
@@ -82,7 +83,6 @@ class RegisterLogin extends Component {
           [
             {
               text: 'OK',
-              // Navigate to the 'Discover' screen on press of OK
               onPress: this.tabHandler(0)
             }
           ]
@@ -94,7 +94,6 @@ class RegisterLogin extends Component {
     } else {
       AlertIOS.alert('Not logged in');
     }
-    Keyboard.dismiss();
   }
 
   render() {
@@ -170,7 +169,8 @@ const styles = StyleSheet.create({
     marginBottom: 0
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 18,
+    fontFamily: Fonts.QuicksandMedium,
     fontWeight: 'bold',
     color: '#ffffff'
   }

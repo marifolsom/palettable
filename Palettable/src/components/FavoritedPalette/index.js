@@ -1,35 +1,29 @@
 import React, { Component } from 'react';
-import { Text, View, Button, TouchableHighlight, StyleSheet, AlertIOS } from 'react-native';
-import FavoritedColor from '../FavoritedColor';
+import { AlertIOS, Button, StyleSheet, View } from 'react-native';
 import * as firebase from 'firebase';
+import FavoritedColor from '../FavoritedColor';
 
 class FavoritedPalette extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      palette: this.props.palette,
-      id: this.props.id
-    }
-    this.deleteFavorite = this.deleteFavorite.bind(this);
-  }
-
+  // Make a function that removes a palette from the current user's favorites
+  // Right now this deletes the most recently favorited palette...
   async deleteFavorite() {
     AlertIOS.alert('Palette removed from favorites');
     // Get the current user
     const currentUser = await firebase.auth().currentUser;
     // Get the palette's unique id and remove from database
-    firebase.database().ref(currentUser.uid).child('favorites').child(this.state.id).remove();
+    firebase.database().ref(currentUser.uid).child('favorites').child(this.props.id).remove();
   }
 
   render() {
-    const colors = this.state.palette.map((color, index) => {
+    // Map over each color in the palette and create a FavoritedColor component with its hexValue passed as a prop
+    const colors = this.props.palette.map((color, index) => {
       return <FavoritedColor key={index} hexValue={color} />;
     })
 
     return (
       <View>
         <View style={styles.buttons}>
-          <Button title="🗑" onPress={this.deleteFavorite} />
+          <Button title="🗑" onPress={this.deleteFavorite.bind(this)} />
         </View>
         <View style={styles.container}>
           {colors}

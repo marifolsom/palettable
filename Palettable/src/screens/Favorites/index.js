@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView, AlertIOS, StyleSheet } from 'react-native';
-import FavoritedPalette from '../../components/FavoritedPalette';
+import { AlertIOS, ScrollView, Text, View } from 'react-native';
 import * as firebase from 'firebase';
+import FavoritedPalette from '../../components/FavoritedPalette';
 
 class FavoritesScreen extends Component {
   constructor(props) {
@@ -14,6 +14,7 @@ class FavoritesScreen extends Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+  // Make a function that switches to a certain tabIndex after 1.5 seconds
   tabHandler(tabIndex) {
     setTimeout(() => {
       this.props.navigator.switchToTab({
@@ -22,6 +23,7 @@ class FavoritesScreen extends Component {
     }, 1500)
   }
 
+  // Make a function that prompts the user to log in if they aren't, and fetches the current user's favorited palettes when the user navigates to the 'Favorites' tab
   onNavigatorEvent(event) {
     if (event.id === 'bottomTabSelected') {
       console.log('Tab selected!');
@@ -46,9 +48,11 @@ class FavoritesScreen extends Component {
     }
     if (event.id === 'bottomTabReselected') {
       console.log('Tab reselected!');
+      this.fetchFavoritedPalettes();
     }
   }
 
+  // Make a function that fetches the current user's favorited palettes
   async fetchFavoritedPalettes() {
     // Get the current user
     const currentUser = await firebase.auth().currentUser;
@@ -67,6 +71,7 @@ class FavoritesScreen extends Component {
 
   render() {
     console.log(this.state.palettes);
+    // Map over each palette and create a FavoritedPalette component with its id and palette hex values as props
     const palettes = this.state.palettes.map((palette, index) => {
       return <FavoritedPalette key={index} id={palette.id} palette={palette.palette} />
     })
@@ -80,9 +85,5 @@ class FavoritesScreen extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-
-})
 
 export default FavoritesScreen;

@@ -7,14 +7,13 @@ class Color extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hexValue: this.props.hexValue,
       lightOrDark: ''
     }
     this.lightOrDark = this.lightOrDark.bind(this);
   }
 
   componentDidMount(){
-    this.lightOrDark(this.state.hexValue);
+    this.lightOrDark(this.props.hexValue);
   }
 
   // Make a function that determines whether a hex value is light or dark
@@ -29,13 +28,13 @@ class Color extends Component {
     // Make a function that sets the background color as the swatch's hex value
     const colorBackground = StyleSheet.flatten([
       styles.swatch,
-      { backgroundColor: `#${this.state.hexValue}` }
+      { backgroundColor: `#${this.props.hexValue}` }
     ])
 
     return (
       <View style={colorBackground}>
         <Text style={[styles.hexValue, this.state.lightOrDark === 'dark' ? styles.hexValueDark : styles.hexValueLight]}>
-          #{this.state.hexValue.toUpperCase()}
+          #{this.props.hexValue.toUpperCase()}
         </Text>
       </View>
     )

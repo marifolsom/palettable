@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Palette from '../../components/Palette';
+import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
+import { Fonts } from '../../utils/Fonts';
 import Clarifai from 'clarifai';
 import RNFetchBlob from 'react-native-fetch-blob';
 import ImagePicker from 'react-native-image-picker';
@@ -22,6 +24,7 @@ class GenerateScreen extends Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+  // Make a function that launches the image picker menu when the user navigates to the 'Generate' tab
   onNavigatorEvent(event) {
     if (event.id === 'bottomTabSelected') {
       console.log('Tab selected!');
@@ -29,6 +32,7 @@ class GenerateScreen extends Component {
     }
     if (event.id === 'bottomTabReselected') {
       console.log('Tab reselected!');
+      this.imagePicker();
     }
   }
 
@@ -54,6 +58,7 @@ class GenerateScreen extends Component {
         // Update the state
         this.setState({
           photoInfo: response,
+          // Reset the palette
           palette: []
         })
       }
@@ -62,10 +67,9 @@ class GenerateScreen extends Component {
 
   // Make a function that takes the photoInfo URI, extracts the prominent colors, and updates the state with the photo's palette
   generatePalette() {
-    // If using react-native-image-picker trim off the 'file://'
+    // Trim off the unnecessary 'file://' prefix
     const uri = this.state.photoInfo.uri.substr(7);
-    console.log(uri);
-    // Covert URI to base64 before putting into Clarifai
+    // Covert URI to base64 before padding into the Clarifai API
     RNFetchBlob.fs.readFile(uri, 'base64')
       .then((photoData) => {
         // React Native doesn't have a process.nextTick, so polyfill it with setImmediate
@@ -75,16 +79,16 @@ class GenerateScreen extends Component {
         .then((response) => {
           console.log('Clarifai Response:', response);
           let hexValueArray = [];
-          // Go through each color that's extracted
+          // Loop through each color that's extracted from the photo
           response.outputs[0].data.colors.forEach(color => {
             // Remove hashtag for formatting
             const hexValue = color.raw_hex.substr(1);
-            // Limit length of array to 5
+            // Limit length of array to 5 palettes, and push into the hexValueArray
             if (hexValueArray.length < 5) {
               hexValueArray.push(hexValue);
             }
           })
-          console.log(response.outputs[0].id);
+          // Update the state
           this.setState({
             palette: hexValueArray
           })
@@ -110,9 +114,9 @@ class GenerateScreen extends Component {
               ) : (
                 <Image source={this.state.photoInfo} style={styles.horizontal} />
               )}
-              <View style={styles.buttons}>
-                <Button title="Generate Palette!" onPress={this.generatePalette} />
-              </View>
+              <Button block primary style={styles.button} onPress={this.generatePalette}>
+                <Text style={styles.text}>GENERATE PALETTE!</Text>
+              </Button>
             </View>
           </View>
         )}
@@ -135,10 +139,16 @@ const styles = StyleSheet.create({
     height: 281.25,
     width: 375
   },
-  buttons: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between'
+  button: {
+    margin: 50,
+    marginTop: 10,
+    marginBottom: 10
+  },
+  text: {
+    fontSize: 18,
+    fontFamily: Fonts.QuicksandMedium,
+    fontWeight: 'bold',
+    color: '#ffffff'
   }
 })
 

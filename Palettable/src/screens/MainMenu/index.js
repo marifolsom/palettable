@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Button, Image, StyleSheet } from 'react-native';
+import { Button, Image, StyleSheet, Text, View } from 'react-native';
 import startMainTabs from '../MainTabs/startMainTabs';
 import { Fonts } from '../../utils/Fonts';
 

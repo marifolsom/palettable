@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, Button, TouchableHighlight, StyleSheet, AlertIOS } from 'react-native';
-import Color from '../Color';
+import { AlertIOS, Button, StyleSheet, TouchableHighlight, View } from 'react-native';
 import * as firebase from 'firebase';
+import Color from '../Color';
 import arrayHasDuplicates from 'array-has-duplicates';
 
 class Palette extends Component {
@@ -19,7 +19,6 @@ class Palette extends Component {
   }
 
   // Make an API fetch to get the hex values of a random palette and update the palette state with that info
-  // // COLORlovers API
   fetchRandomPalette() {
     fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
       .then(apiResponse => apiResponse.json())
@@ -31,20 +30,20 @@ class Palette extends Component {
             .then(apiResponse => apiResponse.json())
             .then(paletteInfo => {
               this.setState({
-                paletteName: paletteInfo[0].title
+                palette: paletteInfo[0].colors
               })
             })
-        // If the palette has duplicate hex values, fetch again
-        // Using a npm package array-has-duplicates to check for duplicates in the palette colors array
+        // If the palette has duplicate hex values, fetch again -- checked using npm package array-has-duplicates
         } else if (arrayHasDuplicates(paletteInfo[0].colors)) {
           console.log('Palette has duplicates, fetching again');
           fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
             .then(apiResponse => apiResponse.json())
             .then(paletteInfo => {
               this.setState({
-                paletteName: paletteInfo[0].title
+                palette: paletteInfo[0].colors
               })
             })
+        // Otherwise update the state
         } else {
           this.setState({
             palette: paletteInfo[0].colors
@@ -57,7 +56,7 @@ class Palette extends Component {
   }
 
   async addFavorite() {
-    // If the user is not logged in alert them to log in or register
+    // If the user is not logged in alert them to log in or register first
     if (!firebase.auth().currentUser) {
       AlertIOS.alert('Log in or create an account to save to favorites');
     }
@@ -85,13 +84,13 @@ class Palette extends Component {
 
   render() {
     let colors = {};
-    // If the palette is coming from the 'Generate' screen, map over hexValueArray and create a color component with each hex value passed as a prop
+    // If the palette is coming from the 'Generate' screen, map over the palette that's stored in props and create a color component with each hex value passed as a prop
     if (this.props.hexValueArray !== undefined) {
       colors = this.props.hexValueArray.map(color => {
         return <Color key={color} hexValue={color} />;
       })
+    // If the palette is coming from the 'Discover' screen, map over the palette that's stored in state, convert to hex, and create a color component with each hex value passed as a prop
     } else {
-      // If the palette is coming from the 'Discover' screen, map over array of rgb values, convert to hex, and create a color component with each hex value passed as a prop
       colors = this.state.palette.map(color => {
         return <Color key={color} hexValue={color} />;
       })
