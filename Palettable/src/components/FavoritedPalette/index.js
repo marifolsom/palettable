@@ -19,7 +19,8 @@ class FavoritedPalette extends Component {
     const currentUser = await firebase.auth().currentUser;
     // Get the palette's unique id and remove from database
     console.log(this.state.id);
-    firebase.database().ref(currentUser.uid).child(this.state.id).remove();
+    // firebase.database().ref(currentUser.uid).child(this.state.id).remove();
+    firebase.database().ref(currentUser.uid).child('favorites').child(this.state.id).remove();
   }
 
   render() {

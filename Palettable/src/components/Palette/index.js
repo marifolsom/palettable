@@ -35,6 +35,7 @@ class Palette extends Component {
               })
             })
         // If the palette has duplicate hex values, fetch again
+        // Using a npm package array-has-duplicates to check for duplicates in the palette colors array
         } else if (arrayHasDuplicates(paletteInfo[0].colors)) {
           console.log('Palette has duplicates, fetching again');
           fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)

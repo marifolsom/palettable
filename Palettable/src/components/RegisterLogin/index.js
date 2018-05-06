@@ -25,7 +25,7 @@ class RegisterLogin extends Component {
       // Navigate to the 'Favorites' screen, the user is logged in
       // setTimeout(() => {
         this.props.navigator.switchToTab({
-          tabIndex: 0
+          tabIndex: 2
         })
       // }, 1500)
     } catch (error) {
