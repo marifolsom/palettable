@@ -5,7 +5,7 @@ import { Fonts } from '../../utils/Fonts';
 
 class MainMenuScreen extends Component {
   tabHandler(tabIndex) {
-    startMainTabs(tabIndex);
+    // startMainTabs(tabIndex);
     this.props.navigator.switchToTab({
       tabIndex: tabIndex
     })

@@ -3,6 +3,12 @@ import { Navigation } from 'react-native-navigation';
 const startTabs = (tabIndex) => {
   Navigation.startTabBasedApp({
     tabs: [
+      // {
+      //   screen: 'palettable.MainMenuScreen',
+      //   icon: require('Palettable/assets/img/icons/home.png'),
+      //   label: 'Home',
+      //   title: 'Home'
+      // },
       {
         screen: 'palettable.DiscoverScreen',
         icon: require('Palettable/assets/img/icons/paint-brush.png'),

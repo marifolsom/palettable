@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Text, View, AlertIOS, StyleSheet } from 'react-native';
+import { Text, View, AlertIOS, StyleSheet, Image } from 'react-native';
 import * as firebase from 'firebase';
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
+import { Fonts } from '../../utils/Fonts';
 
 class RegisterLogin extends Component {
   constructor(props) {
@@ -21,17 +22,14 @@ class RegisterLogin extends Component {
       await firebase.auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password);
       console.log('Account created');
-      // Navigate to the 'Discover' tab, the user is logged in
+      // Navigate to the 'Favorites' screen, the user is logged in
       // setTimeout(() => {
-        // this.props.navigator.switchToTab({
-        //   tabIndex: 0
-        // })
+        this.props.navigator.switchToTab({
+          tabIndex: 0
+        })
       // }, 1500)
     } catch (error) {
-      console.log(error.toString());
-      AlertIOS.alert(
-        error.toString()
-      )
+      AlertIOS.alert(error.toString());
     }
     console.log('current user:', firebase.auth().currentUser);
   }
@@ -44,44 +42,44 @@ class RegisterLogin extends Component {
       console.log('Logged In!');
       // Navigate to the 'Favorites' screen
       // setTimeout(() => {
-        // this.props.navigator.switchToTab({
-        //   tabIndex: 2
-        // })
+        this.props.navigator.switchToTab({
+          tabIndex: 2
+        })
       // }, 1500)
     } catch (error) {
-      console.log(error.toString());
-      AlertIOS.alert(
-        error.toString()
-      )
+      AlertIOS.alert(error.toString());
     }
     console.log('current user:', firebase.auth().currentUser);
   }
 
   async logout() {
-    try {
-      await firebase.auth().signOut();
-      console.log('Logged out');
-      // Navigate to Main Menu
-      setTimeout(() => {
-        this.props.navigator.push({
-          screen: 'palettable.MainMenuScreen'
-        })
-        // this.props.navigator.toggleNavBar({
-        //   to: 'hidden',
-        //   animated: false
-        // })
-      }, 1500)
-    } catch (error) {
-      console.log(error.toString());
-      AlertIOS.alert(
-        error.toString()
-      )
+    // If the user is logged in, log them out
+    if (firebase.auth().currentUser) {
+      try {
+        await firebase.auth().signOut();
+        console.log('Logged out');
+        // Navigate to 'Discover'
+        // setTimeout(() => {
+          this.props.navigator.switchToTab({
+            tabIndex: 0
+          })
+        // }, 1500)
+      } catch (error) {
+        console.log(error.toString());
+        AlertIOS.alert(error.toString());
+      }
+    } else {
+      AlertIOS.alert('Not logged in.');
     }
   }
 
   render() {
     return (
       <Container style={styles.container}>
+        <View style={styles.logo}>
+          <Text style={styles.header}>Palettable</Text>
+          <Image source={require('Palettable/assets/img/palettable-logo.png')} style={styles.image} />
+        </View>
         <Content>
           <Form>
             <Item floatingLabel>
@@ -103,12 +101,14 @@ class RegisterLogin extends Component {
                 onChangeText={password => this.setState({ password })}
               />
             </Item>
-            <Button block primary style={styles.button} onPress={this.login}>
-              <Text style={styles.buttonText}>LOGIN</Text>
-            </Button>
-            <Button block primary style={styles.button} onPress={this.register}>
-              <Text style={styles.buttonText}>REGISTER</Text>
-            </Button>
+            <View>
+              <Button block primary style={styles.button} onPress={this.login}>
+                <Text style={styles.buttonText}>LOGIN</Text>
+              </Button>
+              <Button block primary style={styles.button} onPress={this.register}>
+                <Text style={styles.buttonText}>REGISTER</Text>
+              </Button>
+            </View>
             <Button block primary style={styles.button} onPress={this.logout}>
               <Text style={styles.buttonText}>LOGOUT</Text>
             </Button>
@@ -122,8 +122,23 @@ class RegisterLogin extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 15,
-    justifyContent: 'center'
+    padding: 10,
+    justifyContent: 'center',
+  },
+  header: {
+    fontSize: 35,
+    fontFamily: Fonts.QuicksandMedium,
+    color: '#000000'
+  },
+  logo: {
+    alignItems: 'center'
+  },
+  image: {
+    height: 80,
+    width: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20
   },
   button: {
     margin: 20,
