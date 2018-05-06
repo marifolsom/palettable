@@ -710,6 +710,10 @@ array-filter@~0.0.0:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/array-filter/-/array-filter-0.0.1.tgz#7da8cf2e26628ed732803581fd21f67cacd2eeec"
 
+array-has-duplicates@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/array-has-duplicates/-/array-has-duplicates-1.0.1.tgz#cd7a23d2f5ed27b8cd1e59e5a48831637a41f028"
+
 array-map@~0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/array-map/-/array-map-0.0.0.tgz#88a2bab73d1cf7bcd5c1b118a003f66f665fa662"

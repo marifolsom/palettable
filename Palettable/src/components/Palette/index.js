@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Button, TouchableHighlight, StyleSheet, AlertIOS } from 'react-native';
 import Color from '../Color';
 import * as firebase from 'firebase';
+import arrayHasDuplicates from 'array-has-duplicates';
 
 class Palette extends Component {
   constructor(props) {
@@ -24,9 +25,18 @@ class Palette extends Component {
       .then(apiResponse => apiResponse.json())
       .then(paletteInfo => {
         // If the palette length is not 5, fetch again
-        // Probably a better way to do this?
         if (paletteInfo[0].colors.length !== 5) {
           console.log('Palette is too long/short, fetching again');
+          fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
+            .then(apiResponse => apiResponse.json())
+            .then(paletteInfo => {
+              this.setState({
+                paletteName: paletteInfo[0].title
+              })
+            })
+        // If the palette has duplicate hex values, fetch again
+        } else if (arrayHasDuplicates(paletteInfo[0].colors)) {
+          console.log('Palette has duplicates, fetching again');
           fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
             .then(apiResponse => apiResponse.json())
             .then(paletteInfo => {

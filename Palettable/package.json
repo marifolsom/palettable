@@ -12,6 +12,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "array-has-duplicates": "^1.0.1",
     "clarifai": "^2.7.1",
     "firebase": "^4.13.1",
     "hex-to-rgb": "^1.0.1",
