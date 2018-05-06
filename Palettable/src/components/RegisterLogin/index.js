@@ -14,6 +14,15 @@ class RegisterLogin extends Component {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.tabHandler = this.tabHandler.bind(this);
+  }
+
+  tabHandler(tabIndex) {
+    setTimeout(() => {
+      this.props.navigator.switchToTab({
+        tabIndex: tabIndex
+      })
+    }, 1500)
   }
 
   async register() {
@@ -28,11 +37,7 @@ class RegisterLogin extends Component {
           {
             text: 'OK',
             // Navigate to the 'Favorites' screen, the user is logged in on press of OK
-            onPress: setTimeout(() => {
-              this.props.navigator.switchToTab({
-                tabIndex: 2
-              })
-            }, 1500)
+            onPress: this.tabHandler(2)
           }
         ]
       )
@@ -55,11 +60,7 @@ class RegisterLogin extends Component {
           {
             text: 'OK',
             // Navigate to the 'Favorites' screen on press of OK
-            onPress: setTimeout(() => {
-              this.props.navigator.switchToTab({
-                tabIndex: 2
-              })
-            }, 1500)
+            onPress: this.tabHandler(2)
           }
         ]
       )
@@ -82,11 +83,7 @@ class RegisterLogin extends Component {
             {
               text: 'OK',
               // Navigate to the 'Discover' screen on press of OK
-              onPress: setTimeout(() => {
-                this.props.navigator.switchToTab({
-                  tabIndex: 0
-                })
-              }, 1500)
+              onPress: this.tabHandler(0)
             }
           ]
         )
@@ -128,7 +125,7 @@ class RegisterLogin extends Component {
                 onChangeText={password => this.setState({ password })}
               />
             </Item>
-            <View>
+            <View >
               <Button block primary style={styles.button} onPress={this.login}>
                 <Text style={styles.buttonText}>LOGIN</Text>
               </Button>
@@ -153,7 +150,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   header: {
-    fontSize: 35,
+    fontSize: 38,
     fontFamily: Fonts.QuicksandMedium,
     color: '#000000'
   },
@@ -161,11 +158,12 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   image: {
-    height: 80,
-    width: 80,
+    height: 82,
+    width: 82,
     justifyContent: 'center',
     alignItems: 'center',
-    margin: 20
+    margin: 20,
+    marginBottom: 0
   },
   button: {
     margin: 20,

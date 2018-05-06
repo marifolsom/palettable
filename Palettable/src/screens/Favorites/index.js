@@ -10,7 +10,16 @@ class FavoritesScreen extends Component {
       palettes: []
     }
     this.fetchFavoritedPalettes = this.fetchFavoritedPalettes.bind(this);
+    this.tabHandler = this.tabHandler.bind(this);
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  tabHandler(tabIndex) {
+    setTimeout(() => {
+      this.props.navigator.switchToTab({
+        tabIndex: tabIndex
+      })
+    }, 1500)
   }
 
   onNavigatorEvent(event) {
@@ -24,11 +33,7 @@ class FavoritesScreen extends Component {
           [
             {
               text: 'OK',
-              onPress: setTimeout(() => {
-                this.props.navigator.switchToTab({
-                  tabIndex: 3
-                })
-              }, 1500)
+              onPress: this.tabHandler(3)
             }
           ]
         )
