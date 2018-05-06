@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, AlertIOS, StyleSheet, Image } from 'react-native';
+import { Text, View, AlertIOS, StyleSheet, Image, Keyboard } from 'react-native';
 import * as firebase from 'firebase';
 import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
 import { Fonts } from '../../utils/Fonts';
@@ -14,7 +14,6 @@ class RegisterLogin extends Component {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
-    this.tabHandler = this.tabHandler.bind(this);
   }
 
   async register() {
@@ -29,7 +28,11 @@ class RegisterLogin extends Component {
           {
             text: 'OK',
             // Navigate to the 'Favorites' screen, the user is logged in on press of OK
-            onPress: this.tabHandler(2)
+            onPress: setTimeout(() => {
+              this.props.navigator.switchToTab({
+                tabIndex: 2
+              })
+            }, 1500)
           }
         ]
       )
@@ -37,6 +40,7 @@ class RegisterLogin extends Component {
       AlertIOS.alert(error.toString());
     }
     console.log('current user:', firebase.auth().currentUser);
+    Keyboard.dismiss();
   }
 
   async login() {
@@ -51,7 +55,11 @@ class RegisterLogin extends Component {
           {
             text: 'OK',
             // Navigate to the 'Favorites' screen on press of OK
-            onPress: this.tabHandler(2)
+            onPress: setTimeout(() => {
+              this.props.navigator.switchToTab({
+                tabIndex: 2
+              })
+            }, 1500)
           }
         ]
       )
@@ -59,6 +67,7 @@ class RegisterLogin extends Component {
       AlertIOS.alert(error.toString());
     }
     console.log('current user:', firebase.auth().currentUser);
+    Keyboard.dismiss();
   }
 
   async logout() {
@@ -73,7 +82,11 @@ class RegisterLogin extends Component {
             {
               text: 'OK',
               // Navigate to the 'Discover' screen on press of OK
-              onPress: this.tabHandler(0)
+              onPress: setTimeout(() => {
+                this.props.navigator.switchToTab({
+                  tabIndex: 0
+                })
+              }, 1500)
             }
           ]
         )
@@ -84,14 +97,7 @@ class RegisterLogin extends Component {
     } else {
       AlertIOS.alert('Not logged in');
     }
-  }
-
-  tabHandler(tabIndex) {
-    setTimeout(() => {
-      this.props.navigator.switchToTab({
-        tabIndex: tabIndex
-      })
-    }, 1000)
+    Keyboard.dismiss();
   }
 
   render() {

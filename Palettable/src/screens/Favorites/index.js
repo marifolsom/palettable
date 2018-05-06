@@ -18,7 +18,20 @@ class FavoritesScreen extends Component {
       console.log('Tab selected!');
       // If the user is not logged in alert them to log in or register
       if (!firebase.auth().currentUser) {
-        AlertIOS.alert('Log in or create an account to view your favorites');
+        AlertIOS.alert(
+          'Log in or create an account to view your favorites',
+          null,
+          [
+            {
+              text: 'OK',
+              onPress: setTimeout(() => {
+                this.props.navigator.switchToTab({
+                  tabIndex: 3
+                })
+              }, 1500)
+            }
+          ]
+        )
         // Empty the palettes array
         this.setState({
           palettes: []
