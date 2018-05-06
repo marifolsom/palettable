@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import hexToRgb from 'hex-to-rgb';
-import { Fonts } from '../../utils/Fonts';
 
 class Color extends Component {
   constructor(props) {
@@ -19,17 +17,16 @@ class Color extends Component {
     ])
 
     return (
-      <View style={colorBackground}>
-        <Text style={[styles.hexValue, this.state.lightOrDark === 'dark' ? styles.hexValueDark : styles.hexValueLight]}>
-          #{this.state.hexValue.toUpperCase()}
-        </Text>
-      </View>
+      <View style={colorBackground}></View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-
+  swatch: {
+    height: 103.8,
+    width: 75
+  }
 })
 
 export default Color;

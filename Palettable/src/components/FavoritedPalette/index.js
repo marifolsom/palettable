@@ -7,24 +7,23 @@ class FavoritedPalette extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      palette: this.props.palette
+      palette: this.props.palette,
+      id: this.props.id
     }
     this.deleteFavorite = this.deleteFavorite.bind(this);
   }
 
   async deleteFavorite() {
-    console.log('You unfavorited a palette with containing these colors:', this.state.palette);
+    AlertIOS.alert('Palette removed from favorites');
     // Get the current user
-    console.log(await firebase.auth().currentUser);
     const currentUser = await firebase.auth().currentUser;
-    // Get a unique key
-    const databaseRef = await firebase.database().ref(currentUser.uid).child('favorites').push();
-
+    // Get the palette's unique id and remove from database
+    console.log(this.state.id);
+    firebase.database().ref(currentUser.uid).child(this.state.id).remove();
   }
 
   render() {
     const colors = this.state.palette.map((color, index) => {
-      // console.log('a color:', color);
       return <FavoritedColor key={index} hexValue={color} />;
     })
 
@@ -33,7 +32,7 @@ class FavoritedPalette extends Component {
         <View style={styles.buttons}>
           <Button title="🗑" onPress={this.deleteFavorite} />
         </View>
-        <View>
+        <View style={styles.container}>
           {colors}
         </View>
       </View>
@@ -42,6 +41,12 @@ class FavoritedPalette extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    height: 103.8,
+    width: 375,
+    display: 'flex',
+    flexDirection: 'row',
+  },
   buttons: {
     display: 'flex',
     flexDirection: 'row',

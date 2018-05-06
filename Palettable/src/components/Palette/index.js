@@ -7,8 +7,7 @@ class Palette extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      palette: [],
-      paletteName: ''
+      palette: []
     }
     this.fetchRandomPalette = this.fetchRandomPalette.bind(this);
     this.addFavorite = this.addFavorite.bind(this);
@@ -27,13 +26,11 @@ class Palette extends Component {
         // If the palette length is not 5, fetch again
         // Probably a better way to do this?
         if (paletteInfo[0].colors.length !== 5) {
-          console.log('Palette is too long/short, fetch again');
+          console.log('Palette is too long/short, fetching again');
           fetch(`http://www.colourlovers.com/api/palettes/random?format=json`)
             .then(apiResponse => apiResponse.json())
             .then(paletteInfo => {
-              console.log(paletteInfo[0].title);
               this.setState({
-                palette: paletteInfo[0].colors,
                 paletteName: paletteInfo[0].title
               })
             })
@@ -44,17 +41,14 @@ class Palette extends Component {
         }
       })
       .catch(error => {
-        console.log('There has been a problem with your fetch operation: ' + error.message);
+        console.log('Error:', error.message);
       })
   }
 
   async addFavorite() {
     // If the user is not logged in alert them to log in or register
     if (!firebase.auth().currentUser) {
-      console.log('Please log in or create an account to save to your favorites.');
-      AlertIOS.alert(
-        'Please log in or create an account to save to your favorites.'
-      )
+      AlertIOS.alert('Log in or create an account to save to favorites.');
     }
     // Get the current user
     console.log('current user:', await firebase.auth().currentUser);
@@ -63,20 +57,14 @@ class Palette extends Component {
     const databaseRef = await firebase.database().ref(currentUser.uid).child('favorites').push();
     // If the palette is coming from the 'Generate' screen, save palette that's stored in props
     if (this.props.hexValueArray !== undefined) {
-      console.log(`You favorited a palette with the colors ${this.props.hexValueArray}!`);
-      AlertIOS.alert(
-        'You added a palette to your favorites'
-      )
+      AlertIOS.alert('Palette saved to favorites');
       // Update the palette at that unique key
       databaseRef.set({
         palette: this.props.hexValueArray
       })
     // If the palette is coming from the 'Discover' screen, save palette that's stored in state
     } else {
-      console.log(`You favorited a palette with the colors ${this.state.palette}!`);
-      AlertIOS.alert(
-        'You added a palette to your favorites'
-      )
+      AlertIOS.alert('Palette saved to favorites');
       // Update the palette at that unique key
       databaseRef.set({
         palette: this.state.palette

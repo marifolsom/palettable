@@ -33,7 +33,7 @@ class RegisterLogin extends Component {
         error.toString()
       )
     }
-    console.log('current user:', await firebase.auth().currentUser);
+    console.log('current user:', firebase.auth().currentUser);
   }
 
   async login() {
@@ -54,7 +54,7 @@ class RegisterLogin extends Component {
         error.toString()
       )
     }
-    console.log('current user:', await firebase.auth().currentUser);
+    console.log('current user:', firebase.auth().currentUser);
   }
 
   async logout() {
