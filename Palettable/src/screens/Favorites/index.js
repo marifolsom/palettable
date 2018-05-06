@@ -18,7 +18,7 @@ class FavoritesScreen extends Component {
       console.log('Tab selected!');
       // If the user is not logged in alert them to log in or register
       if (!firebase.auth().currentUser) {
-        AlertIOS.alert('Log in or create an account to view your favorites.');
+        AlertIOS.alert('Log in or create an account to view your favorites');
         // Empty the palettes array
         this.setState({
           palettes: []
@@ -34,8 +34,6 @@ class FavoritesScreen extends Component {
   async fetchFavoritedPalettes() {
     // Get the current user
     const currentUser = await firebase.auth().currentUser;
-    // Make a variable for 'this' so that it can be used inside of the firebase function
-    const self = this;
     let palettes = []
     // Retrieve new palettes as they are added to the database
     firebase.database().ref(currentUser.uid).child('favorites').on('child_added', snapshot => {
@@ -44,7 +42,7 @@ class FavoritesScreen extends Component {
       palettes.push({ id: id, palette: newPalette });
     })
     // Update the state
-    self.setState({
+    this.setState({
       palettes: palettes
     })
   }

@@ -53,7 +53,8 @@ class GenerateScreen extends Component {
       } else {
         // Update the state
         this.setState({
-          photoInfo: response
+          photoInfo: response,
+          palette: []
         })
       }
     })
@@ -104,7 +105,11 @@ class GenerateScreen extends Component {
           <View>
             {/* Otherwise display the taken image along with 'Generate!' and 'Retake' buttons */}
             <View style={styles.container}>
-              <Image source={this.state.photoInfo} style={styles.container} />
+              {this.state.photoInfo !== null && this.state.photoInfo.isVertical === true ? (
+                <Image source={this.state.photoInfo} style={styles.container} />
+              ) : (
+                <Image source={this.state.photoInfo} style={styles.horizontal} />
+              )}
               <View style={styles.buttons}>
                 <Button title="Generate Palette!" onPress={this.generatePalette} />
               </View>
@@ -121,6 +126,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    height: 500,
+    width: 375
+  },
+  horizontal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 281.25,
     width: 375
   },
   buttons: {

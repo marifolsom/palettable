@@ -59,7 +59,7 @@ class Palette extends Component {
   async addFavorite() {
     // If the user is not logged in alert them to log in or register
     if (!firebase.auth().currentUser) {
-      AlertIOS.alert('Log in or create an account to save to favorites.');
+      AlertIOS.alert('Log in or create an account to save to favorites');
     }
     // Get the current user
     console.log('current user:', await firebase.auth().currentUser);

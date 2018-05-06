@@ -14,6 +14,7 @@ class RegisterLogin extends Component {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
+    this.tabHandler = this.tabHandler.bind(this);
   }
 
   async register() {
@@ -21,13 +22,17 @@ class RegisterLogin extends Component {
     try {
       await firebase.auth()
         .createUserWithEmailAndPassword(this.state.email, this.state.password);
-      console.log('Account created');
-      // Navigate to the 'Favorites' screen, the user is logged in
-      // setTimeout(() => {
-        this.props.navigator.switchToTab({
-          tabIndex: 2
-        })
-      // }, 1500)
+      AlertIOS.alert(
+        'Account created',
+        null,
+        [
+          {
+            text: 'OK',
+            // Navigate to the 'Favorites' screen, the user is logged in on press of OK
+            onPress: this.tabHandler(2)
+          }
+        ]
+      )
     } catch (error) {
       AlertIOS.alert(error.toString());
     }
@@ -39,13 +44,17 @@ class RegisterLogin extends Component {
     try {
       await firebase.auth()
       .signInWithEmailAndPassword(this.state.email, this.state.password);
-      console.log('Logged In!');
-      // Navigate to the 'Favorites' screen
-      // setTimeout(() => {
-        this.props.navigator.switchToTab({
-          tabIndex: 2
-        })
-      // }, 1500)
+      AlertIOS.alert(
+        'Logged in!',
+        null,
+        [
+          {
+            text: 'OK',
+            // Navigate to the 'Favorites' screen on press of OK
+            onPress: this.tabHandler(2)
+          }
+        ]
+      )
     } catch (error) {
       AlertIOS.alert(error.toString());
     }
@@ -57,20 +66,32 @@ class RegisterLogin extends Component {
     if (firebase.auth().currentUser) {
       try {
         await firebase.auth().signOut();
-        console.log('Logged out');
-        // Navigate to 'Discover'
-        // setTimeout(() => {
-          this.props.navigator.switchToTab({
-            tabIndex: 0
-          })
-        // }, 1500)
+        AlertIOS.alert(
+          'Logged out',
+          null,
+          [
+            {
+              text: 'OK',
+              // Navigate to the 'Discover' screen on press of OK
+              onPress: this.tabHandler(0)
+            }
+          ]
+        )
       } catch (error) {
         console.log(error.toString());
         AlertIOS.alert(error.toString());
       }
     } else {
-      AlertIOS.alert('Not logged in.');
+      AlertIOS.alert('Not logged in');
     }
+  }
+
+  tabHandler(tabIndex) {
+    setTimeout(() => {
+      this.props.navigator.switchToTab({
+        tabIndex: tabIndex
+      })
+    }, 1000)
   }
 
   render() {
