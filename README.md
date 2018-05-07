@@ -1,7 +1,7 @@
 # Project 4
 
 ### Screenshots of the App
-<img src="Palettable/assets/img/app-screenshots/IMG_0483.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0476.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0477.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0478.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0479.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0484.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0480.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0482.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0485.PNG" height="450">
+<img src="Palettable/assets/img/app-screenshots/IMG_0483.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0476.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0477.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0478.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0479.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0484.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0480.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0485.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0482.PNG" height="450"> 
 
 
 
