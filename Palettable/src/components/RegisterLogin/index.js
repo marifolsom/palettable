@@ -101,6 +101,10 @@ class RegisterLogin extends Component {
           //   }
           // ]
         )
+        this.setState({
+          email: '',
+          password: ''
+        })
       } catch (error) {
         console.log(error.toString());
         AlertIOS.alert(error.toString());

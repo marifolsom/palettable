@@ -72,4 +72,4 @@ Navigation.startTabBasedApp({
 })
 
 // Ignore warnings about remote debugger and tab switching
-console.ignoredYellowBox = ['Remote debugger', 'Possible Unhandled Promise Rejection (id: 0)', 'Possible Unhandled Promise Rejection (id: 1)'];
+console.ignoredYellowBox = ['Remote debugger', 'Possible Unhandled Promise Rejection', 'Native TextInput', 'Unhandled JS Exception'];
