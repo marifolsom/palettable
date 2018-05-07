@@ -14,6 +14,15 @@ class FavoritesScreen extends Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
+  async componentDidUpdate() {
+    // Get the current user
+    const currentUser = await firebase.auth().currentUser;
+    // Fetch updated palettes when a palette is removed from the database
+    firebase.database().ref(currentUser.uid).child('favorites').on('child_removed', snapshot => {
+      this.fetchFavoritedPalettes();
+    })
+  }
+
   // Make a function that switches to a certain tabIndex after 1.5 seconds
   tabHandler(tabIndex) {
     setTimeout(() => {
@@ -56,8 +65,8 @@ class FavoritesScreen extends Component {
   async fetchFavoritedPalettes() {
     // Get the current user
     const currentUser = await firebase.auth().currentUser;
-    let palettes = []
-    // Retrieve new palettes as they are added to the database
+    let palettes = [];
+    // Retrieve new palettes as new ones are added to the database
     firebase.database().ref(currentUser.uid).child('favorites').on('child_added', snapshot => {
       const id = snapshot.key;
       const newPalette = snapshot.val().palette;
@@ -70,7 +79,6 @@ class FavoritesScreen extends Component {
   }
 
   render() {
-    console.log(this.state.palettes);
     // Map over each palette and create a FavoritedPalette component with its id and palette hex values as props
     const palettes = this.state.palettes.map((palette, index) => {
       return <FavoritedPalette key={index} id={palette.id} palette={palette.palette} />
