@@ -23,12 +23,14 @@ class FavoritedPalette extends Component {
     firebase.database().ref(currentUser.uid).child('favorites').child(this.props.id).remove();
   }
 
+  // Make a function that sets the state of 'pressed' to true
   showHex() {
     this.setState({
       pressed: true
     })
   }
 
+  // Make a function that sets the state of 'pressed' to false
   hideHex() {
     this.setState({
       pressed: false
