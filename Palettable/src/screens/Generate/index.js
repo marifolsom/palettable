@@ -184,14 +184,14 @@ const styles = StyleSheet.create({
     color: '#ffffff'
   },
   text: {
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: Fonts.QuicksandMedium,
     fontWeight: 'bold',
     color: '#000000'
   },
   image: {
-    height: 120,
-    width: 120,
+    height: 100,
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center',
     margin: 20,

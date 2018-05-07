@@ -15,6 +15,20 @@ class RegisterLogin extends Component {
     this.login = this.login.bind(this);
     this.logout = this.logout.bind(this);
     this.tabHandler = this.tabHandler.bind(this);
+    // this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+  }
+
+  // Make a function that redirects the user to the 'Favorites' screen if already logged in
+  onNavigatorEvent(event) {
+    if (event.id === 'bottomTabSelected') {
+      console.log('Tab selected!');
+      // if (firebase.auth().currentUser) {
+      //   this.tabHandler(2);
+      // }
+    }
+    if (event.id === 'bottomTabReselected') {
+      console.log('Tab reselected!');
+    }
   }
 
   // Make a function that switches to a certain tabIndex after 1.5 seconds
@@ -34,13 +48,13 @@ class RegisterLogin extends Component {
         .createUserWithEmailAndPassword(this.state.email, this.state.password);
       AlertIOS.alert(
         'Account created',
-        null,
-        [
-          {
-            text: 'OK',
-            onPress: this.tabHandler(2)
-          }
-        ]
+        // null,
+        // [
+        //   {
+        //     text: 'OK',
+        //     onPress: this.tabHandler(2)
+        //   }
+        // ]
       )
     } catch (error) {
       AlertIOS.alert(error.toString());
@@ -57,13 +71,13 @@ class RegisterLogin extends Component {
       .signInWithEmailAndPassword(this.state.email, this.state.password);
       AlertIOS.alert(
         'Logged in!',
-        null,
-        [
-          {
-            text: 'OK',
-            onPress: this.tabHandler(2)
-          }
-        ]
+        // null,
+        // [
+        //   {
+        //     text: 'OK',
+        //     onPress: this.tabHandler(2)
+        //   }
+        // ]
       )
     } catch (error) {
       AlertIOS.alert(error.toString());
@@ -79,13 +93,13 @@ class RegisterLogin extends Component {
         await firebase.auth().signOut();
         AlertIOS.alert(
           'Logged out',
-          null,
-          [
-            {
-              text: 'OK',
-              onPress: this.tabHandler(0)
-            }
-          ]
+          // null,
+          // [
+          //   {
+          //     text: 'OK',
+          //     onPress: this.tabHandler(0)
+          //   }
+          // ]
         )
       } catch (error) {
         console.log(error.toString());
