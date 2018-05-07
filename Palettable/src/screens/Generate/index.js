@@ -25,11 +25,11 @@ class GenerateScreen extends Component {
     this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
   }
 
-  // Make a function that launches the image picker menu when the user navigates to the 'Generate' tab
+  // Make a function that resets the state and launches the image picker menu when the user navigates to the 'Generate' tab
   onNavigatorEvent(event) {
     if (event.id === 'bottomTabSelected') {
       console.log('Tab selected!');
-      // Reset photoInfo and palette
+      // Reset state
       this.setState({
         photoInfo: null,
         palette: [],
@@ -40,7 +40,7 @@ class GenerateScreen extends Component {
     }
     if (event.id === 'bottomTabReselected') {
       console.log('Tab reselected!');
-      // Reset photoInfo and palette
+      // Reset state
       this.setState({
         photoInfo: null,
         palette: [],
@@ -80,6 +80,7 @@ class GenerateScreen extends Component {
 
   // Make a function that takes the photoInfo URI, extracts the prominent colors, and updates the state with the photo's palette
   generatePalette() {
+    // Set palette loading to true
     this.setState({
       paletteLoading: true
     })
@@ -131,9 +132,12 @@ class GenerateScreen extends Component {
               <View style={styles.container}>
                 {/* If that palette info is loading, display a 'loading message' */}
                 {this.state.paletteLoading === true ? (
-                  <Text style={styles.text}>Generating Palette...</Text>
+                  <View style={styles.container}>
+                    <Text style={styles.text}>Generating Palette...</Text>
+                    <Image source={require('Palettable/assets/img/loading.gif')} style={styles.image} />
+                  </View>
                 ) : (
-                  // Otherwise display the taken image along with 'Generate!' and 'Retake' buttons
+                  // Otherwise display the taken image along with 'Generate!' button
                   <View>
                     {this.state.photoInfo !== null && this.state.photoInfo.isVertical === true ? (
                       <Image source={this.state.photoInfo} style={styles.container} />
@@ -184,6 +188,14 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.QuicksandMedium,
     fontWeight: 'bold',
     color: '#000000'
+  },
+  image: {
+    height: 120,
+    width: 120,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 20,
+    marginBottom: 0
   }
 })
 
