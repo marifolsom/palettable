@@ -40,6 +40,6 @@ Run `yarn install` to install all of the app's dependencies from the `package.js
 ---
 
 ## Unsolved Problems or Hurdles
-I had a lot of difficulties with navigating throughout the app. Initially I had a set up where the app would start with a main menu screen with links to the other components (like in my wireframes), but had a hard time hiding/revealing the nav bar. I decided that having the nav bar was more important, so I got rid of the main menu screen, and the app starts on the login/register page instead.
+I had a lot of difficulties with navigating throughout the app. Initially I had a set up where the app would start with a main menu screen with links to the other components (like in my wireframes), but had a hard time hiding/revealing the nav bar. I decided that having the nav bar was more important, so I got rid of the main menu screen, and the app starts on the login/register page instead. I also wanted to be able to redirect the user to a specific screen after logging in, registering, or logging out, but wasn't able to do that by the deadline.
 
-I also wanted to be able to redirect the user to a specific screen after logging in, registering, or logging out, but wasn't able to do that by the deadline.
+I also had some issues with the APIs and packages I initially wanted to use, because I was using multiple and passing the output from one as input into another, and the data/information needed to be in a certain format. I had a hard time finding APIs that would give me what I needed, and ended up switching a couple during the course of the project.
