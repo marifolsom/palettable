@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import hexToRgb from 'hex-to-rgb';
 import { Fonts } from '../../utils/Fonts';
+import hexToRgb from 'hex-to-rgb';
 
 class Color extends Component {
   constructor(props) {

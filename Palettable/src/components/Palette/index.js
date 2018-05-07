@@ -61,7 +61,6 @@ class Palette extends Component {
       AlertIOS.alert('Log in or create an account to save to favorites');
     }
     // Get the current user
-    console.log('current user:', await firebase.auth().currentUser);
     const currentUser = await firebase.auth().currentUser;
     // Get a unique key
     const databaseRef = await firebase.database().ref(currentUser.uid).child('favorites').push();

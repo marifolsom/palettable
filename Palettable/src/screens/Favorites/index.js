@@ -72,13 +72,17 @@ class FavoritesScreen extends Component {
       const newPalette = snapshot.val().palette;
       palettes.push({ id: id, palette: newPalette });
     })
-    // Update the state
-    this.setState({
-      palettes: palettes
-    })
+    // Update the state if the palettes array in the database is different from the palettes array store in state
+    // This prevents componentDidUpdate from going on for forever, but it also prevents auto refresh when a new palette is added to favorites...
+    // if (palettes.length !== this.state.palettes.length) {
+      this.setState({
+        palettes: palettes
+      })
+    // }
   }
 
   render() {
+    console.log(this.state.palettes);
     // Map over each palette and create a FavoritedPalette component with its id and palette hex values as props
     const palettes = this.state.palettes.map((palette, index) => {
       return <FavoritedPalette key={index} id={palette.id} palette={palette.palette} />
