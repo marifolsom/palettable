@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Palette from '../../components/Palette';
-import { Container, Content, Form, Item, Input, Label, Button } from 'native-base';
+import { Button } from 'native-base';
 import { Fonts } from '../../utils/Fonts';
 import Clarifai from 'clarifai';
 import RNFetchBlob from 'react-native-fetch-blob';
@@ -17,7 +17,8 @@ class GenerateScreen extends Component {
     super(props);
     this.state = {
       photoInfo: null,
-      palette: []
+      palette: [],
+      paletteLoading: false
     }
     this.generatePalette = this.generatePalette.bind(this);
     this.imagePicker = this.imagePicker.bind(this);
@@ -28,10 +29,24 @@ class GenerateScreen extends Component {
   onNavigatorEvent(event) {
     if (event.id === 'bottomTabSelected') {
       console.log('Tab selected!');
+      // Reset photoInfo and palette
+      this.setState({
+        photoInfo: null,
+        palette: [],
+        paletteLoading: false
+      })
+      // Launch imagePicker menu
       this.imagePicker();
     }
     if (event.id === 'bottomTabReselected') {
       console.log('Tab reselected!');
+      // Reset photoInfo and palette
+      this.setState({
+        photoInfo: null,
+        palette: [],
+        paletteLoading: false
+      })
+      // Launch imagePicker menu
       this.imagePicker();
     }
   }
@@ -57,9 +72,7 @@ class GenerateScreen extends Component {
       } else {
         // Update the state
         this.setState({
-          photoInfo: response,
-          // Reset the palette
-          palette: []
+          photoInfo: response
         })
       }
     })
@@ -67,6 +80,9 @@ class GenerateScreen extends Component {
 
   // Make a function that takes the photoInfo URI, extracts the prominent colors, and updates the state with the photo's palette
   generatePalette() {
+    this.setState({
+      paletteLoading: true
+    })
     // Trim off the unnecessary 'file://' prefix
     const uri = this.state.photoInfo.uri.substr(7);
     // Covert URI to base64 before padding into the Clarifai API
@@ -90,7 +106,8 @@ class GenerateScreen extends Component {
           })
           // Update the state
           this.setState({
-            palette: hexValueArray
+            palette: hexValueArray,
+            paletteLoading: false
           })
         })
       })
@@ -107,17 +124,29 @@ class GenerateScreen extends Component {
           <Palette hexValueArray={this.state.palette} />
         ) : (
           <View>
-            {/* Otherwise display the taken image along with 'Generate!' and 'Retake' buttons */}
-            <View style={styles.container}>
-              {this.state.photoInfo !== null && this.state.photoInfo.isVertical === true ? (
-                <Image source={this.state.photoInfo} style={styles.container} />
-              ) : (
-                <Image source={this.state.photoInfo} style={styles.horizontal} />
-              )}
-              <Button block primary style={styles.button} onPress={this.generatePalette}>
-                <Text style={styles.text}>GENERATE PALETTE!</Text>
-              </Button>
-            </View>
+            {/* If photoInfo is null, display a 'loading' message */}
+            {this.state.photoInfo === null ? (
+              <Text style={styles.text}>Loading...</Text>
+            ) : (
+              <View style={styles.container}>
+                {/* If that palette info is loading, display a 'loading message' */}
+                {this.state.paletteLoading === true ? (
+                  <Text style={styles.text}>Generating Palette...</Text>
+                ) : (
+                  // Otherwise display the taken image along with 'Generate!' and 'Retake' buttons
+                  <View>
+                    {this.state.photoInfo !== null && this.state.photoInfo.isVertical === true ? (
+                      <Image source={this.state.photoInfo} style={styles.container} />
+                    ) : (
+                      <Image source={this.state.photoInfo} style={styles.horizontal} />
+                    )}
+                    <Button block primary style={styles.button} onPress={this.generatePalette}>
+                      <Text style={styles.buttonText}>GENERATE PALETTE!</Text>
+                    </Button>
+                  </View>
+                )}
+              </View>
+            )}
           </View>
         )}
       </View>
@@ -144,11 +173,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10
   },
-  text: {
+  buttonText: {
     fontSize: 18,
     fontFamily: Fonts.QuicksandMedium,
     fontWeight: 'bold',
     color: '#ffffff'
+  },
+  text: {
+    fontSize: 18,
+    fontFamily: Fonts.QuicksandMedium,
+    fontWeight: 'bold',
+    color: '#000000'
   }
 })
 
