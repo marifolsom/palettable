@@ -149,10 +149,10 @@ class RegisterLogin extends Component {
               <Button block primary style={styles.button} onPress={this.register}>
                 <Text style={styles.buttonText}>REGISTER</Text>
               </Button>
+              <Button block primary style={styles.button} onPress={this.logout}>
+                <Text style={styles.buttonText}>LOGOUT</Text>
+              </Button>
             </View>
-            <Button block primary style={styles.button} onPress={this.logout}>
-              <Text style={styles.buttonText}>LOGOUT</Text>
-            </Button>
           </Form>
         </Content>
       </Container>
