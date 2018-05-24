@@ -7,8 +7,8 @@
 ### App Description
 Palettable is a mobile app that allows users to discover and generate beautiful color palettes. Users can explore pre-made color palettes on the 'Discover' page, as well as create their own color palettes by uploading or taking a picture of their surroundings on the 'Generate' page. Palettable utilizes the phone's built-in camera to capture and extract the prominent colors from an image to create unique color palettes.
 
-### Screenshots of the App
-<img src="Palettable/assets/img/app-screenshots/IMG_0483.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0476.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0477.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0478.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0479.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0484.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0480.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0485.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0482.PNG" height="450">
+<!-- ### Screenshots of the App
+<img src="Palettable/assets/img/app-screenshots/IMG_0483.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0476.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0477.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0478.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0479.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0484.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0480.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0485.PNG" height="450"> <img src="Palettable/assets/img/app-screenshots/IMG_0482.PNG" height="450"> -->
 
 ---
 
