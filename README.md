@@ -1,7 +1,7 @@
 # Palettable
 
-<video height="450" controls>
-  <source src="Palettable/assets/screen-recording.MP4" type="video/mp4">
+<video height="500" autoPlay loop>
+  <source src="Palettable/assets/palettable-recording.m4v" type="video/mp4" />
 </video>
 
 ### App Description
