@@ -1,8 +1,6 @@
 # Palettable
 
-<video height="500" autoPlay loop>
-  <source src="Palettable/assets/palettable-recording.m4v" type="video/mp4" />
-</video>
+<img src="https://media.giphy.com/media/8YKZtVwUnEwCFvU5GR/giphy.gif" height="500" />
 
 ### App Description
 Palettable is a mobile app that allows users to discover and generate beautiful color palettes. Users can explore pre-made color palettes on the 'Discover' page, as well as create their own color palettes by uploading or taking a picture of their surroundings on the 'Generate' page. Palettable utilizes the phone's built-in camera to capture and extract the prominent colors from an image to create unique color palettes.
